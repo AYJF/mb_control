@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mb_control/models/model.dart';
+import 'package:mb_control/models/promoter.dart';
 import 'package:mb_control/models/user.dart';
 import 'package:mb_control/services/mb_services.dart';
 
 class UserHndl with ChangeNotifier {
+  String? _promoterID = "";
+  String? get promoterID => this._promoterID;
+
+  set promoterID(String? value) {
+    this._promoterID = value;
+    notifyListeners();
+  }
+
   User _user = User.empty;
   User get user => this._user;
 
@@ -37,5 +47,17 @@ class UserHndl with ChangeNotifier {
   Future<bool> login() async {
     _user = await mbService.login(email: _email, password: _password);
     return _user.token != null ? true : false;
+  }
+
+  Future<List<Promoter>> getPromoters() async {
+    return _user.token != null
+        ? await mbService.getPromoters(token: _user.token!)
+        : [];
+  }
+
+  Future<List<Model>> getModels() async {
+    return _user.token != null
+        ? await mbService.getModel(token: _user.token!)
+        : [];
   }
 }

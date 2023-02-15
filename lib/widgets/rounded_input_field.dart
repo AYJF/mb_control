@@ -4,16 +4,12 @@ import 'package:mb_control/tools/color_hex.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String? hintText;
-  final IconData icon;
+  final IconData? icon;
   final ValueChanged<String>? onChanged;
   final String? Function(String? value)? validator;
 
   const RoundedInputField(
-      {Key? key,
-      this.hintText,
-      this.icon = Ionicons.ios_person_circle_outline,
-      this.onChanged,
-      this.validator})
+      {Key? key, this.hintText, this.icon, this.onChanged, this.validator})
       : super(key: key);
 
   @override
@@ -47,7 +43,7 @@ class RoundedInputField extends StatelessWidget {
         hintText: hintText,
         fillColor: HexColor('#FFFFFF'),
         prefixIcon: Icon(
-          MaterialIcons.email,
+          icon ?? MaterialIcons.email,
           color: HexColor('#C2CFF0'),
         ),
       ),

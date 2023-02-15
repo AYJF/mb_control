@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mb_control/models/model.dart';
+import 'package:mb_control/models/promoter.dart';
 import 'package:mb_control/models/user.dart';
 
 class MbService {
@@ -27,13 +29,42 @@ class MbService {
       return User.empty;
     }
   }
-}
 
-// final Map<String, String> _header = {
-//     "Accept-Encoding": "gzip",
-//     'Content-type': 'application/json',
-//     'Accept': 'application/json',
-//     "Duffel-Version": "v1",
-//     "Authorization":
-//         "Bearer duffel_test_hlYn3VXLzLmgvsFeYnKFC1ouqznBCI-zBbgSGySFXn1"
-//   };
+  Future<List<Promoter>> getPromoters({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/promoter"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? promoterModelFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Model>> getModel({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/model"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? modelFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+}
