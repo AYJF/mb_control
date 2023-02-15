@@ -8,6 +8,14 @@ class UserHndl with ChangeNotifier {
   String? _promoterID = "";
   String? get promoterID => this._promoterID;
 
+  List<Map> _models = [];
+  List<Map> get models => this._models;
+
+  set models(List<Map> value) {
+    this._models = value;
+    notifyListeners();
+  }
+
   set promoterID(String? value) {
     this._promoterID = value;
     notifyListeners();
@@ -56,8 +64,13 @@ class UserHndl with ChangeNotifier {
   }
 
   Future<List<Model>> getModels() async {
-    return _user.token != null
+    _models.clear();
+    final List<Model> dbModels = _user.token != null
         ? await mbService.getModel(token: _user.token!)
         : [];
+
+    models.addAll(
+        dbModels.map((e) => {"modelId": e.id, "hasIva": false, "value": 0}));
+    return dbModels;
   }
 }

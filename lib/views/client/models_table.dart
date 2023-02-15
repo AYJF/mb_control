@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 
 class ModelsTable extends StatelessWidget {
   const ModelsTable({Key? key}) : super(key: key);
@@ -18,8 +20,11 @@ class ModelsTable extends StatelessWidget {
           );
         }
 
-        return _TableWidget(
-          models: snapshot.data,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _TableWidget(
+            models: snapshot.data,
+          ),
         );
       },
     );
@@ -38,110 +43,78 @@ class _TableWidget extends StatefulWidget {
 }
 
 class _TableWidgetState extends State<_TableWidget> {
-  int selectedIndex = -1;
-  Color? color;
+  List<bool> status = [];
+
+  @override
+  void initState() {
+    status = List.generate(widget.models!.length, (index) => false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      onSelectAll: (val) {
-        setState(() {
-          selectedIndex = -1;
-        });
-      },
-      columns: const [
-        DataColumn(label: Text('Language')),
-        DataColumn(label: Text('Translation')),
-      ],
-      rows: widget.models!
-          .map((e) => DataRow(cells: [
-                DataCell(Text(e.name ?? "")),
-                const DataCell(
-                  TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: 'paine'),
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+
+    return SizedBox(
+      child: DataTable(
+        columnSpacing: 15.0,
+        columns: const [
+          DataColumn(label: Text('Modelos')),
+          DataColumn(label: Text('Comision')),
+          DataColumn(label: Text('CONIVA/IVA')),
+        ],
+        rows: widget.models!
+            .asMap()
+            .entries
+            .map(
+              (e) => DataRow(cells: [
+                DataCell(Text(e.value.name ?? "")),
+                DataCell(
+                  Container(
+                    width: 80,
+                    padding: const EdgeInsets.all(8.0),
+                    child: StepperSwipe(
+                      initialValue: 0,
+                      speedTransitionLimitCount: 3,
+                      onChanged: (int value) =>
+                          userHndl.models[e.key]['value'] = value,
+                      firstIncrementDuration: const Duration(
+                          milliseconds: 250), //Unit time before fast counting
+                      secondIncrementDuration: const Duration(
+                          milliseconds: 100), //Unit time during fast counting
+                      direction: Axis.horizontal,
+                      dragButtonColor: Colors.blueAccent,
+                      maxValue: 50,
+                      minValue: 0,
+                      stepperValue: 1,
+                    ),
                   ),
                 ),
-              ]))
-          .toList(),
+                DataCell(
+                  SizedBox(
+                    width: 56,
+                    child: FlutterSwitch(
+                      width: 50.0,
+                      height: 25.0,
+                      valueFontSize: 25.0,
+                      toggleSize: 24.0,
+                      value: status[e.key],
+                      borderRadius: 30.0,
+                      padding: 2.0,
+                      showOnOff: false,
+                      onToggle: (val) {
+                        userHndl.models[e.key]['hasIva'] = val;
+                        setState(() {
+                          status[e.key] = val;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ]),
+            )
+            .toList(),
+      ),
     );
   }
 }
-
-
-// [
-//         DataRow(
-//             selected: 0 == selectedIndex,
-//             onSelectChanged: (val) {
-//               setState(() {
-//                 selectedIndex = 0;
-//               });
-//             },
-//             cells: [
-//               DataCell(
-//                 Text(
-//                   "RO",
-//                   textAlign: TextAlign.left,
-//                   style: TextStyle(fontWeight: FontWeight.bold),
-//                 ),
-//                 onTap: () {
-//                   setState(() {
-//                     color = Colors.lightBlueAccent;
-//                   });
-//                 },
-//               ),
-//               DataCell(
-//                 TextField(
-//                   decoration: InputDecoration(
-//                       border: InputBorder.none, hintText: 'paine'),
-//                 ),
-//               ),
-//             ]),
-//         DataRow(
-//             selected: 1 == selectedIndex,
-//             onSelectChanged: (val) {
-//               setState(() {
-//                 selectedIndex = 1;
-//               });
-//             },
-//             cells: [
-//               DataCell(
-//                   Text(
-//                     "EN",
-//                     textAlign: TextAlign.left,
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ), onTap: () {
-//                 print('EN is clicked');
-//               }),
-//               DataCell(
-//                 TextField(
-//                   decoration: InputDecoration(
-//                       border: InputBorder.none, hintText: 'bread'),
-//                 ),
-//               ),
-//             ]),
-//         DataRow(
-//             selected: 2 == selectedIndex,
-//             onSelectChanged: (val) {
-//               setState(() {
-//                 selectedIndex = 2;
-//               });
-
-//               print(selectedIndex);
-//             },
-//             cells: [
-//               DataCell(
-//                   Text(
-//                     "FR",
-//                     textAlign: TextAlign.left,
-//                     style: TextStyle(fontWeight: FontWeight.bold),
-//                   ), onTap: () {
-//                 print('FR is clicked');
-//               }),
-//               DataCell(
-//                 TextField(
-//                   decoration: InputDecoration(
-//                       border: InputBorder.none, hintText: 'pain'),
-//                 ),
-//               ),
-//             ]),
-//       ],

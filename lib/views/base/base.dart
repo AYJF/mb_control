@@ -25,13 +25,12 @@ class Base extends StatelessWidget {
             clipper: _HeaderClipper(),
             child: Container(
               height: 150,
-              // width: size.width,
+              width: size.width,
               color: const Color(0xFF000B49),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: showBackBtn
                         ? IconButton(
                             onPressed: () => Navigator.pop(context),
@@ -41,17 +40,14 @@ class Base extends StatelessWidget {
                             ))
                         : Container(),
                   ),
-                  Expanded(
-                    flex: 6,
-                    child: Text(
-                      title,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                    ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
                   ),
-                  Expanded(flex: 2, child: Container())
+                  Expanded(flex: 1, child: Container())
                 ],
               ),
             ),
