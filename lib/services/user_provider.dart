@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mb_control/models/client_model.dart';
 import 'package:mb_control/models/model.dart';
+import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
 import 'package:mb_control/models/user.dart';
 import 'package:mb_control/services/mb_services.dart';
@@ -60,6 +62,18 @@ class UserHndl with ChangeNotifier {
   Future<List<Promoter>> getPromoters() async {
     return _user.token != null
         ? await mbService.getPromoters(token: _user.token!)
+        : [];
+  }
+
+  Future<List<UserClient>> getClients() async {
+    return _user.token != null
+        ? await mbService.getClients(token: _user.token!)
+        : [];
+  }
+
+  Future<List<Operation>> getOperations() async {
+    return _user.token != null
+        ? await mbService.getOperations(token: _user.token!)
         : [];
   }
 

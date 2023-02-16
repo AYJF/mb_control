@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mb_control/tools/color_hex.dart';
 import 'package:animations/animations.dart';
+import 'package:mb_control/views/client/clients_table.dart';
 import 'package:mb_control/views/client/create_client.dart';
+import 'package:mb_control/views/promoters/promoters_table.dart';
 
 class Operaciones extends StatefulWidget {
   const Operaciones({Key? key}) : super(key: key);
@@ -96,7 +98,7 @@ class _OperacionesState extends State<Operaciones> {
                         );
                       },
                       openBuilder: (context, action) {
-                        return const CreateClient();
+                        return const PromoterTable();
                       }),
                   const SizedBox(height: 8),
                   const Text(
@@ -131,7 +133,7 @@ class _OperacionesState extends State<Operaciones> {
                         );
                       },
                       openBuilder: (context, action) {
-                        return const CreateClient();
+                        return const ClientTable();
                       }),
                   const SizedBox(height: 8),
                   const Text(

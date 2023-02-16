@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/views/home/home.dart';
+import 'package:mb_control/views/operation/operantion_table.dart';
+import 'package:mb_control/views/promoters/promoter_table_handler.dart';
 import 'package:mb_control/views/welcome/intro.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserHndl())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserHndl()),
+        ChangeNotifierProvider(create: (_) => PromoterDataNotifier()),
+      ],
       child: MaterialApp(
         title: 'MB-Control',
         debugShowCheckedModeBanner: false,
@@ -29,6 +34,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (_) => const Intro(),
           '/home': (_) => const Home(),
+          '/operations': (_) => const OperationTable()
         },
       ),
     );

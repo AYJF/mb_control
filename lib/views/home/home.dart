@@ -15,7 +15,13 @@ class _HomeState extends State<Home> {
     return Base(
         title: "Catálogo",
         body: Column(
-          children: const [Operaciones()],
+          children: [
+            const Operaciones(),
+            const SizedBox(height: 45),
+            FloatingActionButton(onPressed: () {
+              Navigator.of(context).pushNamed('/operations');
+            })
+          ],
         ));
   }
 }
