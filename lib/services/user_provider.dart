@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mb_control/models/client_model.dart';
+import 'package:mb_control/models/company.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
@@ -12,6 +13,38 @@ class UserHndl with ChangeNotifier {
 
   List<Map> _models = [];
   List<Map> get models => this._models;
+
+  bool _contactByEmail = false;
+  bool get contactByEmail => this._contactByEmail;
+
+  set contactByEmail(bool value) {
+    this._contactByEmail = value;
+    notifyListeners();
+  }
+
+  int _wInvoice = 0;
+  int get wInvoice => this._wInvoice;
+
+  set wInvoice(int value) {
+    this._wInvoice = value;
+    notifyListeners();
+  }
+
+  int _total = 0;
+  int get total => this._total;
+
+  set total(int value) {
+    this._total = value;
+    notifyListeners();
+  }
+
+  bool _contactByPhone = false;
+  bool get contactByPhone => this._contactByPhone;
+
+  set contactByPhone(bool value) {
+    this._contactByPhone = value;
+    notifyListeners();
+  }
 
   set models(List<Map> value) {
     this._models = value;
@@ -74,6 +107,12 @@ class UserHndl with ChangeNotifier {
   Future<List<Operation>> getOperations() async {
     return _user.token != null
         ? await mbService.getOperations(token: _user.token!)
+        : [];
+  }
+
+  Future<List<Company>> getCompanies() async {
+    return _user.token != null
+        ? await mbService.getCompanies(token: _user.token!)
         : [];
   }
 

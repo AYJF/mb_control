@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class Indicator extends StatelessWidget {
   const Indicator({
@@ -62,8 +61,11 @@ class PieChartSample2 extends StatefulWidget {
 class _PieChartSample2tate extends State<PieChartSample2> {
   int touchedIndex = -1;
 
+  final List<Color> colors = [Colors.green, Colors.yellow, Colors.purple];
+
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return AspectRatio(
       aspectRatio: 1.3,
       child: Row(
@@ -101,43 +103,17 @@ class _PieChartSample2tate extends State<PieChartSample2> {
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const <Widget>[
-              Indicator(
-                color: Colors.blue,
-                text: 'First',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Colors.yellow,
-                text: 'Second',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Colors.purple,
-                text: 'Third',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Indicator(
-                color: Colors.green,
-                text: 'Fourth',
-                isSquare: true,
-              ),
-              SizedBox(
-                height: 18,
-              ),
-            ],
-          ),
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.data.keys
+                  .map((e) => Column(
+                        children: [
+                          Indicator(
+                              color: colors[index++], text: e, isSquare: true),
+                          const SizedBox(height: 4),
+                        ],
+                      ))
+                  .toList()),
           const SizedBox(
             width: 28,
           ),
@@ -147,11 +123,11 @@ class _PieChartSample2tate extends State<PieChartSample2> {
   }
 
   List<PieChartSectionData> showingSections() {
+    int index = 0;
     const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
     return widget.data.keys
         .map((e) => PieChartSectionData(
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                  .withOpacity(1.0),
+              color: colors[index++],
               value: widget.data[e],
               title: (widget.data[e] * 100 / widget.total).toStringAsFixed(1),
               radius: 50,

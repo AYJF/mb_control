@@ -1,26 +1,26 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:mb_control/models/promoter.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/views/base/base.dart';
 import 'package:mb_control/views/client/models_table.dart';
 import 'package:mb_control/widgets/rounded_input_field.dart';
 import 'package:provider/provider.dart';
 
-//
-class CreateClient extends StatefulWidget {
-  const CreateClient({Key? key}) : super(key: key);
+class CreatePromoters extends StatefulWidget {
+  const CreatePromoters({Key? key}) : super(key: key);
 
   @override
-  State<CreateClient> createState() => _CreateClientState();
+  State<CreatePromoters> createState() => _CreatePromotersState();
 }
 
-class _CreateClientState extends State<CreateClient> {
+class _CreatePromotersState extends State<CreatePromoters> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
     return Base(
-      title: "Crear Cliente",
+      title: "Crear promotor",
       showBackBtn: true,
       body: FutureBuilder(
         future: userHndl.getPromoters(),
@@ -39,7 +39,7 @@ class _CreateClientState extends State<CreateClient> {
                   SizedBox(
                     width: 250,
                     child: RoundedInputField(
-                      hintText: "Nombrte del Cliente ",
+                      hintText: "Nombrte",
                       icon: Icons.person,
                       validator: (value) {
                         return null;
@@ -51,8 +51,27 @@ class _CreateClientState extends State<CreateClient> {
                   SizedBox(
                     width: 250,
                     child: RoundedInputField(
-                      hintText: "RFC",
-                      icon: Icons.person,
+                      hintText: "Email",
+                      icon: Icons.email,
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            !EmailValidator.validate(value)) {
+                          return 'Email is not valid';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        userHndl.email = value;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  SizedBox(
+                    width: 250,
+                    child: RoundedInputField(
+                      hintText: "Telefono",
+                      icon: Icons.phone,
                       validator: (value) {
                         // if (value == null ||
                         //     value.isEmpty ||
@@ -67,34 +86,48 @@ class _CreateClientState extends State<CreateClient> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  const ModelsTable(),
+                  const ModelsTable(
+                    lastColumnName: 'PISO/%',
+                  ),
                   const SizedBox(height: 25),
-                  const Text("Promotores"),
-                  Center(
-                    child: SizedBox(
-                      width: 250,
-                      child: DropdownButtonFormField<String>(
-                        value: snapshot.data![0].id,
-                        icon: const Icon(Icons.arrow_downward),
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.deepPurple),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                  const Text("Método de contacto"),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Email"),
+                        SizedBox(
+                          width: 56,
+                          child: FlutterSwitch(
+                            width: 50.0,
+                            height: 25.0,
+                            valueFontSize: 25.0,
+                            toggleSize: 24.0,
+                            value: userHndl.contactByEmail,
+                            borderRadius: 30.0,
+                            padding: 2.0,
+                            showOnOff: false,
+                            onToggle: (val) => userHndl.contactByEmail = val,
                           ),
                         ),
-                        onChanged: (String? value) {
-                          userHndl.promoterID = value;
-                        },
-                        items: snapshot.data!
-                            .map<DropdownMenuItem<String>>((Promoter value) {
-                          return DropdownMenuItem<String>(
-                            value: value.id,
-                            child: Text(value.name ?? ""),
-                          );
-                        }).toList(),
-                      ),
+                        Text("WhatsApp"),
+                        SizedBox(
+                          width: 56,
+                          child: FlutterSwitch(
+                            width: 50.0,
+                            height: 25.0,
+                            valueFontSize: 25.0,
+                            toggleSize: 24.0,
+                            value: userHndl.contactByPhone,
+                            borderRadius: 30.0,
+                            padding: 2.0,
+                            showOnOff: false,
+                            onToggle: (val) => userHndl.contactByPhone = val,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 25),

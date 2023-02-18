@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mb_control/models/client_model.dart';
+import 'package:mb_control/models/company.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
@@ -63,6 +64,25 @@ class MbService {
       );
       return response.statusCode == 200
           ? clientModelFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Company>> getCompanies({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/company"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? companyFromJson(convert.jsonDecode(response.body))
           : [];
     } catch (e) {
       debugPrint(e.toString());
