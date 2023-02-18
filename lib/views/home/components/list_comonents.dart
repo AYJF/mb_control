@@ -1,17 +1,17 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:mb_control/tools/color_hex.dart';
-import 'package:animations/animations.dart';
-import 'package:mb_control/views/client/create_client.dart';
-import 'package:mb_control/views/promoters/create_promoters.dart';
+import 'package:mb_control/views/client/clients_table.dart';
+import 'package:mb_control/views/promoters/promoters_table.dart';
 
-class Operaciones extends StatefulWidget {
-  const Operaciones({Key? key}) : super(key: key);
+class ListComonents extends StatefulWidget {
+  const ListComonents({Key? key}) : super(key: key);
 
   @override
-  State<Operaciones> createState() => _OperacionesState();
+  State<ListComonents> createState() => _ListComonentsState();
 }
 
-class _OperacionesState extends State<Operaciones> {
+class _ListComonentsState extends State<ListComonents> {
   final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final double _fabDimension = 50.0;
   @override
@@ -22,7 +22,7 @@ class _OperacionesState extends State<Operaciones> {
         Padding(
           padding: const EdgeInsets.only(left: 15),
           child: Text(
-            'Operaciones',
+            'Tablas',
             style: TextStyle(
               color: HexColor('#111827'),
               fontSize: 18,
@@ -62,11 +62,11 @@ class _OperacionesState extends State<Operaciones> {
                         );
                       },
                       openBuilder: (context, action) {
-                        return const CreateClient();
+                        return const ClientTable();
                       }),
                   const SizedBox(height: 8),
                   const Text(
-                    "Nuevo Cliente",
+                    "Clientes",
                     style: TextStyle(color: Colors.black),
                   )
                 ],
@@ -74,6 +74,7 @@ class _OperacionesState extends State<Operaciones> {
               Column(
                 children: [
                   FloatingActionButton(
+                    heroTag: "Table operations",
                     backgroundColor: Colors.grey,
                     elevation: 0.0,
                     child: Image.asset(
@@ -81,74 +82,12 @@ class _OperacionesState extends State<Operaciones> {
                       width: 35,
                       fit: BoxFit.cover,
                     ),
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Seleccione la Operacion'),
-                        insetPadding: const EdgeInsets.symmetric(horizontal: 1),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed('/retorno'),
-                              child: SizedBox(
-                                height: 120,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey,
-                                          shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        'assets/images/shapes/calculadora.png',
-                                        width: 25,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text("Retorno")
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushNamed('/assing-invoice'),
-                              child: SizedBox(
-                                height: 120,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey,
-                                          shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        'assets/images/shapes/cross.png',
-                                        width: 25,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text("Asignar Factura")
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/operations'),
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    "Crear Operacion",
+                    "Operaciones",
                     style: TextStyle(color: Colors.black),
                   )
                 ],
@@ -179,11 +118,11 @@ class _OperacionesState extends State<Operaciones> {
                         );
                       },
                       openBuilder: (context, action) {
-                        return const CreatePromoters();
+                        return const PromoterTable();
                       }),
                   const SizedBox(height: 8),
                   const Text(
-                    "Nuevo Promotor",
+                    "Promotores",
                     style: TextStyle(color: Colors.black),
                   )
                 ],

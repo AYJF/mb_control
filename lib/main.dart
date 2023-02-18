@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/views/company/create_company.dart';
 import 'package:mb_control/views/home/home.dart';
+import 'package:mb_control/views/operation/assing_invoice.dart';
 import 'package:mb_control/views/operation/operantion_table.dart';
 import 'package:mb_control/views/operation/retorno.dart';
 import 'package:mb_control/views/promoters/promoter_table_handler.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           '/promoters': (_) => const PromoterTable(),
           '/company': (_) => const CreateCompany(),
           '/retorno': (_) => const Retorno(),
+          '/assing-invoice': (_) => const AssingInvoice()
         },
       ),
     );

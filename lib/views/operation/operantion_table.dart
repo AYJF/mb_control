@@ -23,7 +23,7 @@ class _OperationTableState extends State<OperationTable> {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
     final _provider = context.watch<PromoterDataNotifier>();
     return Base(
-        title: "Listado de Promotores",
+        title: "Listado de Operaciones",
         showBackBtn: true,
         body: FutureBuilder<List<Operation>>(
             future: userHndl.getOperations(),
