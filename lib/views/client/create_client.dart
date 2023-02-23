@@ -29,6 +29,7 @@ class _CreateClientState extends State<CreateClient> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          userHndl.promoterID = snapshot.data![0].id;
           return SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -42,9 +43,14 @@ class _CreateClientState extends State<CreateClient> {
                       hintText: "Nombrte del Cliente ",
                       icon: Icons.person,
                       validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nombre no puede ser vacio';
+                        }
                         return null;
                       },
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        userHndl.name = value;
+                      },
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -54,15 +60,13 @@ class _CreateClientState extends State<CreateClient> {
                       hintText: "RFC",
                       icon: Icons.person,
                       validator: (value) {
-                        // if (value == null ||
-                        //     value.isEmpty ||
-                        //     !EmailValidator.validate(value)) {
-                        //   return 'Email is not valid';
-                        // }
+                        if (value == null || value.isEmpty) {
+                          return 'RFC no puede ser vacio';
+                        }
                         return null;
                       },
                       onChanged: (value) {
-                        userHndl.email = value;
+                        userHndl.rfc = value;
                       },
                     ),
                   ),
@@ -105,9 +109,11 @@ class _CreateClientState extends State<CreateClient> {
                             if (_formKey.currentState!.validate()) {
                               userHndl.isLoading = true;
 
-                              userHndl.models.forEach((element) {
-                                print(element);
-                              });
+                              // userHndl.models.forEach((element) {
+                              //   print(element);
+                              // });
+
+                              await userHndl.createClient();
                               userHndl.isLoading = false;
                             }
                           },

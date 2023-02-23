@@ -53,7 +53,7 @@ class UserHndl with ChangeNotifier {
 
   set promoterID(String? value) {
     this._promoterID = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   User _user = User.empty;
@@ -68,6 +68,22 @@ class UserHndl with ChangeNotifier {
 
   set email(String value) {
     this._email = value;
+    notifyListeners();
+  }
+
+  String _rfc = "";
+  String get rfc => this._rfc;
+
+  set rfc(String value) {
+    this._rfc = value;
+    notifyListeners();
+  }
+
+  String _name = "";
+  String get name => this._name;
+
+  set name(String value) {
+    this._name = value;
     notifyListeners();
   }
 
@@ -125,5 +141,17 @@ class UserHndl with ChangeNotifier {
     models.addAll(
         dbModels.map((e) => {"modelId": e.id, "hasIva": false, "value": 0}));
     return dbModels;
+  }
+
+  Future<bool> createClient() async {
+    final Map<String, dynamic> body = {
+      "name": _name,
+      "userEmail": _user.email,
+      "rfc": _rfc,
+      "promoterId": _promoterID,
+      "models": _models,
+    };
+
+    return mbService.createClient(body: body, token: _user.token!);
   }
 }

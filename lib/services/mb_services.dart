@@ -129,4 +129,22 @@ class MbService {
       return [];
     }
   }
+
+  Future<bool> createClient(
+      {required Map<String, dynamic> body, required String token}) async {
+    try {
+      final response = await http.post(Uri.parse("$_apiBaseUrl/client"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "Authorization": "Bearer $token"
+          },
+          body: convert.jsonEncode(body));
+
+      return response.statusCode == 204 ? true : false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
