@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mb_control/services/user_provider.dart';
+import 'package:mb_control/views/client/clients_table.dart';
 import 'package:mb_control/views/company/create_company.dart';
 import 'package:mb_control/views/home/home.dart';
 import 'package:mb_control/views/operation/assing_invoice.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (_) => const Intro(),
           '/home': (_) => const Home(),
+          '/clients': (_) => const ClientTable(),
           '/operations': (_) => const OperationTable(),
           '/promoters': (_) => const PromoterTable(),
           '/company': (_) => const CreateCompany(),

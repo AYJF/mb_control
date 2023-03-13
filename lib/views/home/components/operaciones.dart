@@ -73,75 +73,80 @@ class _OperacionesState extends State<Operaciones> {
               ),
               Column(
                 children: [
-                  FloatingActionButton(
-                    backgroundColor: Colors.grey,
-                    elevation: 0.0,
-                    child: Image.asset(
-                      'assets/images/shapes/cross.png',
-                      width: 35,
-                      fit: BoxFit.cover,
-                    ),
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Seleccione la Operacion'),
-                        insetPadding: const EdgeInsets.symmetric(horizontal: 1),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed('/retorno'),
-                              child: SizedBox(
-                                height: 120,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey,
-                                          shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        'assets/images/shapes/calculadora.png',
-                                        width: 25,
-                                        fit: BoxFit.cover,
+                  SizedBox(
+                    height: _fabDimension,
+                    width: _fabDimension,
+                    child: FloatingActionButton(
+                      backgroundColor: Colors.grey,
+                      elevation: 0.0,
+                      child: Image.asset(
+                        'assets/images/shapes/cross.png',
+                        width: 35,
+                        fit: BoxFit.cover,
+                      ),
+                      onPressed: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Seleccione la Operacion'),
+                          insetPadding:
+                              const EdgeInsets.symmetric(horizontal: 1),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              GestureDetector(
+                                onTap: () =>
+                                    Navigator.of(context).pushNamed('/retorno'),
+                                child: SizedBox(
+                                  height: 120,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: const BoxDecoration(
+                                            color: Colors.grey,
+                                            shape: BoxShape.circle),
+                                        child: Image.asset(
+                                          'assets/images/shapes/calculadora.png',
+                                          width: 25,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text("Retorno")
-                                  ],
+                                      const SizedBox(height: 8),
+                                      const Text("Retorno")
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushNamed('/assing-invoice'),
-                              child: SizedBox(
-                                height: 120,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey,
-                                          shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        'assets/images/shapes/cross.png',
-                                        width: 25,
-                                        fit: BoxFit.cover,
+                              GestureDetector(
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed('/assing-invoice'),
+                                child: SizedBox(
+                                  height: 120,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: const BoxDecoration(
+                                            color: Colors.grey,
+                                            shape: BoxShape.circle),
+                                        child: Image.asset(
+                                          'assets/images/shapes/cross.png',
+                                          width: 25,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text("Asignar Factura")
-                                  ],
+                                      const SizedBox(height: 8),
+                                      const Text("Asignar Factura")
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

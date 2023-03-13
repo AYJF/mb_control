@@ -26,7 +26,7 @@ class OperationDTS extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => 100;
+  int get rowCount => userData.length;
 
   @override
   int get selectedRowCount => 0;

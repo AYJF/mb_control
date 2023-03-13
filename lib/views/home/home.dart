@@ -18,8 +18,8 @@ class _HomeState extends State<Home> {
         body: Column(
           children: const [
             Operaciones(),
-            SizedBox(height: 45),
-            ListComonents(),
+            // SizedBox(height: 45),
+            // ListComonents(),
           ],
         ));
   }

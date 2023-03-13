@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mb_control/widgets/drawer/custom_drawer.dart';
 
 class Base extends StatefulWidget {
   const Base({
@@ -19,6 +20,9 @@ class Base extends StatefulWidget {
 class _BaseState extends State<Base> {
   // int currentIndex = 0;
   // final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +32,8 @@ class _BaseState extends State<Base> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: Colors.transparent,
@@ -36,35 +42,40 @@ class _BaseState extends State<Base> {
         flexibleSpace: ClipPath(
           clipper: _HeaderClipper(),
           child: Container(
-            height: 150,
+            height: 200,
             width: size.width,
             color: const Color(0xFF000B49),
             child: Row(
               children: [
                 Expanded(
-                  flex: 1,
-                  child: widget.showBackBtn
-                      ? IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.white,
-                          ))
-                      : Container(),
+                    flex: 2,
+                    child: IconButton(
+                        onPressed: () =>
+                            _scaffoldKey.currentState?.openDrawer(),
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        ))),
+                Expanded(
+                  flex: 8,
+                  child: Center(
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
                 ),
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                Expanded(flex: 1, child: Container())
+                Expanded(flex: 2, child: Container())
               ],
             ),
           ),
         ),
       ),
+
+      drawer: const CustomDrawer(),
       body: widget.body,
       // bottomNavigationBar: CurvedNavigationBar(
       //   key: _bottomNavigationKey,

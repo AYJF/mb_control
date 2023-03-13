@@ -21,7 +21,7 @@ class _OperationTableState extends State<OperationTable> {
   @override
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
-    final _provider = context.watch<PromoterDataNotifier>();
+    final provider = context.watch<PromoterDataNotifier>();
     return Base(
         title: "Listado de Operaciones",
         showBackBtn: true,
@@ -50,17 +50,18 @@ class _OperationTableState extends State<OperationTable> {
                   child: Column(
                     children: [
                       SizedBox(
-                        width: 600.0,
+                        width: double.infinity,
                         child: SingleChildScrollView(
                           child: PaginatedDataTable(
                             header: const Text('Operaciones'),
-                            showCheckboxColumn: true,
+                            dataRowHeight: 50.0,
+                            rowsPerPage: provider.rowsPerPage,
                             onRowsPerPageChanged: (index) =>
-                                _provider.rowsPerPage = index ?? 0,
-                            rowsPerPage: 5,
-                            availableRowsPerPage: const [5, 10, 20],
-                            sortColumnIndex: _provider.sortColumnIndex,
-                            sortAscending: _provider.sortAscending,
+                                provider.rowsPerPage = index!,
+                            // availableRowsPerPage: const [5, 10, 15, 20],
+                            sortAscending: provider.sortAscending,
+                            sortColumnIndex: provider.sortColumnIndex,
+                            showCheckboxColumn: false,
                             columns: const [
                               DataColumn(label: Text('Admin/Enlace')),
                               DataColumn(label: Text('Promotor')),
