@@ -75,13 +75,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     icon: Icons.bar_chart_sharp,
                     title: 'Usuarios',
                     infoCount: 0,
-                    onTap: () {}),
+                    onTap: () => Navigator.of(context).pushNamed('/users')),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.build,
                     title: 'Empresas',
                     infoCount: 0,
-                    onTap: () {}),
+                    onTap: () => Navigator.of(context).pushNamed('/companies')),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.verified_user_sharp,
@@ -103,8 +103,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     onTap: () => Navigator.of(context).pushNamed('/promoters')),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
+                    icon: Icons.document_scanner,
+                    title: 'Promotores',
+                    infoCount: 0,
+                    onTap: () => Navigator.of(context).pushNamed('/invoices')),
+                CustomListTile(
+                    isCollapsed: _isCollapsed,
                     icon: Icons.calculate,
-                    title: 'Calculadora',
+                    title: 'Facturas',
                     infoCount: 0,
                     onTap: () {}),
 

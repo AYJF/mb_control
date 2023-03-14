@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/views/client/clients_table.dart';
+import 'package:mb_control/views/company/companies_table.dart';
 import 'package:mb_control/views/company/create_company.dart';
 import 'package:mb_control/views/home/home.dart';
+import 'package:mb_control/views/invoice/invoice_table.dart';
 import 'package:mb_control/views/operation/assing_invoice.dart';
 import 'package:mb_control/views/operation/operantion_table.dart';
 import 'package:mb_control/views/operation/retorno.dart';
 import 'package:mb_control/views/promoters/promoter_table_handler.dart';
 import 'package:mb_control/views/promoters/promoters_table.dart';
+import 'package:mb_control/views/users/users_table.dart';
 import 'package:mb_control/views/welcome/intro.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +46,9 @@ class MyApp extends StatelessWidget {
           '/operations': (_) => const OperationTable(),
           '/promoters': (_) => const PromoterTable(),
           '/company': (_) => const CreateCompany(),
+          '/companies': (_) => const CompaniesTable(),
+          '/users': (_) => const UserTable(),
+          '/invoices': (_) => const InvoiceTable(),
           '/retorno': (_) => const Retorno(),
           '/assing-invoice': (_) => const AssingInvoice()
         },

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mb_control/models/client_model.dart';
 import 'package:mb_control/models/company.dart';
+import 'package:mb_control/models/invoice.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
 import 'package:mb_control/models/user.dart';
+import 'package:mb_control/models/users.dart';
 import 'package:mb_control/services/mb_services.dart';
 
 class UserHndl with ChangeNotifier {
@@ -111,6 +113,18 @@ class UserHndl with ChangeNotifier {
   Future<List<Promoter>> getPromoters() async {
     return _user.token != null
         ? await mbService.getPromoters(token: _user.token!)
+        : [];
+  }
+
+  Future<List<Invoice>> getInvoices() async {
+    return _user.token != null
+        ? await mbService.getInvoices(token: _user.token!)
+        : [];
+  }
+
+  Future<List<Users>> getUsers() async {
+    return _user.token != null
+        ? await mbService.getUsers(token: _user.token!)
         : [];
   }
 

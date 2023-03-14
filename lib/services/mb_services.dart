@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mb_control/models/client_model.dart';
 import 'package:mb_control/models/company.dart';
+import 'package:mb_control/models/invoice.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
 import 'package:mb_control/models/user.dart';
+import 'package:mb_control/models/users.dart';
 
 class MbService {
   final String _apiBaseUrl = 'https://mb-control.azurewebsites.net/';
@@ -52,10 +54,10 @@ class MbService {
     }
   }
 
-  Future<List<UserClient>> getClients({required String token}) async {
+  Future<List<Users>> getUsers({required String token}) async {
     try {
       final response = await http.get(
-        Uri.parse("$_apiBaseUrl/client"),
+        Uri.parse("$_apiBaseUrl/user"),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -63,7 +65,26 @@ class MbService {
         },
       );
       return response.statusCode == 200
-          ? clientModelFromJson(convert.jsonDecode(response.body))
+          ? usersFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Invoice>> getInvoices({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/invoice"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? invoiceFromJson(convert.jsonDecode(response.body))
           : [];
     } catch (e) {
       debugPrint(e.toString());
@@ -83,6 +104,25 @@ class MbService {
       );
       return response.statusCode == 200
           ? companyFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<UserClient>> getClients({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/client"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? clientModelFromJson(convert.jsonDecode(response.body))
           : [];
     } catch (e) {
       debugPrint(e.toString());
