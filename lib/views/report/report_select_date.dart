@@ -99,6 +99,7 @@ class _SelectLinkers extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
+        userHndl.linkerEmail = snapshot.data?[0].email ?? "";
         return SizedBox(
           width: 250,
           child: DropdownButtonFormField<String>(

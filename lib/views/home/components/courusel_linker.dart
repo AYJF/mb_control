@@ -25,7 +25,8 @@ class CouruselLinker extends StatelessWidget {
               builder: (BuildContext context) {
                 return GestureDetector(
                   onTap: () {
-                    print(user.email);
+                    userHndl.linkerEmail = user.email;
+                    Navigator.of(context).pushNamed('/operations');
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width,
