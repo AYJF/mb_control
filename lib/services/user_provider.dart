@@ -10,6 +10,10 @@ import 'package:mb_control/models/users.dart';
 import 'package:mb_control/services/mb_services.dart';
 
 class UserHndl with ChangeNotifier {
+  DateTime? startDateTime;
+  DateTime? endDateTime;
+
+  String? linkerEmail = '';
   String? _promoterID = "";
   String? get promoterID => this._promoterID;
 
@@ -105,6 +109,12 @@ class UserHndl with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearOperations() {
+    linkerEmail = '';
+    startDateTime = null;
+    endDateTime = null;
+  }
+
   Future<bool> login() async {
     _user = await mbService.login(email: _email, password: _password);
     return _user.token != null ? true : false;
@@ -136,7 +146,12 @@ class UserHndl with ChangeNotifier {
 
   Future<List<Operation>> getOperations() async {
     return _user.token != null
-        ? await mbService.getOperations(token: _user.token!)
+        ? await mbService.getOperations(
+            token: _user.token!,
+            email: linkerEmail ?? "",
+            startDate: startDateTime == null ? "" : startDateTime.toString(),
+            endDate: endDateTime == null ? "" : endDateTime.toString(),
+          )
         : [];
   }
 

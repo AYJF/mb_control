@@ -11,6 +11,7 @@ import 'package:mb_control/views/operation/operantion_table.dart';
 import 'package:mb_control/views/operation/retorno.dart';
 import 'package:mb_control/views/promoters/promoter_table_handler.dart';
 import 'package:mb_control/views/promoters/promoters_table.dart';
+import 'package:mb_control/views/report/report_select_date.dart';
 import 'package:mb_control/views/users/users_table.dart';
 import 'package:mb_control/views/welcome/intro.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/companies': (_) => const CompaniesTable(),
           '/users': (_) => const UserTable(),
           '/invoices': (_) => const InvoiceTable(),
+          '/report-date': (_) => const ReportSelectDate(),
           '/retorno': (_) => const Retorno(),
           '/assing-invoice': (_) => const AssingInvoice()
         },

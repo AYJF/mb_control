@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/widgets/drawer/bottom_user_info.dart';
 import 'package:mb_control/widgets/drawer/custom_list_tile.dart';
 import 'package:mb_control/widgets/drawer/header.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
     return SafeArea(
       child: GestureDetector(
         onLongPress: () {
@@ -93,8 +96,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     icon: Icons.money,
                     title: 'Operaciones',
                     infoCount: 0,
-                    onTap: () =>
-                        Navigator.of(context).pushNamed('/operations')),
+                    onTap: () {
+                      userHndl.clearOperations();
+                      Navigator.of(context).pushNamed('/operations');
+                    }),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.manage_accounts,

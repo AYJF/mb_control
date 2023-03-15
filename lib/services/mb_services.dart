@@ -130,10 +130,16 @@ class MbService {
     }
   }
 
-  Future<List<Operation>> getOperations({required String token}) async {
+  Future<List<Operation>> getOperations({
+    required String token,
+    String email = '',
+    String startDate = '',
+    String endDate = '',
+  }) async {
     try {
       final response = await http.get(
-        Uri.parse("$_apiBaseUrl/operation"),
+        Uri.parse(
+            "$_apiBaseUrl/operation?email=$email&startDate=$startDate&endDate=$endDate"),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -141,7 +147,6 @@ class MbService {
         },
       );
 
-      print(response.statusCode);
       return response.statusCode == 200
           ? operationFromJson(convert.jsonDecode(response.body))
           : [];

@@ -34,6 +34,13 @@ class _OperationTableState extends State<OperationTable> {
                 );
               }
 
+              if (snapshot.data!.isEmpty) {
+                return const Center(
+                  child: Text(
+                      'No se encontraron reportes para la fecha seleccionada'),
+                );
+              }
+
               Map<String, dynamic> _listTem = {};
               for (var e in snapshot.data!) {
                 if (e.userName == 'Totales') continue;
@@ -41,8 +48,6 @@ class _OperationTableState extends State<OperationTable> {
                     ? _listTem[e.userName!] += e.totalOperacion
                     : _listTem.putIfAbsent(e.userName!, () => e.totalOperacion);
               }
-
-              print(_listTem);
 
               return SingleChildScrollView(
                 child: Padding(
