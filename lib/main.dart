@@ -11,6 +11,8 @@ import 'package:mb_control/views/operation/operantion_table.dart';
 import 'package:mb_control/views/operation/retorno.dart';
 import 'package:mb_control/views/promoters/promoter_table_handler.dart';
 import 'package:mb_control/views/promoters/promoters_table.dart';
+import 'package:mb_control/views/providerOutcome/provider_outcome_table.dart';
+import 'package:mb_control/views/provider_income/provider_income_table.dart';
 import 'package:mb_control/views/report/report_select_date.dart';
 import 'package:mb_control/views/users/users_table.dart';
 import 'package:mb_control/views/welcome/intro.dart';
@@ -52,7 +54,9 @@ class MyApp extends StatelessWidget {
           '/invoices': (_) => const InvoiceTable(),
           '/report-date': (_) => const ReportSelectDate(),
           '/retorno': (_) => const Retorno(),
-          '/assing-invoice': (_) => const AssingInvoice()
+          '/assing-invoice': (_) => const AssingInvoice(),
+          '/proveedores-in': (_) => const ProviderIcomeTable(),
+          '/proveedores-out': (_) => const ProviderOutcomeTable(),
         },
       ),
     );

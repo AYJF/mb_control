@@ -109,15 +109,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.document_scanner,
-                    title: 'Promotores',
+                    title: 'Facturas',
                     infoCount: 0,
                     onTap: () => Navigator.of(context).pushNamed('/invoices')),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.calculate,
-                    title: 'Facturas',
+                    title: 'Proveedores In',
                     infoCount: 0,
-                    onTap: () {}),
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/proveedores-in')),
+                CustomListTile(
+                    isCollapsed: _isCollapsed,
+                    icon: Icons.deselect,
+                    title: 'Proveedores Out',
+                    infoCount: 0,
+                    onTap: () =>
+                        Navigator.of(context).pushNamed('/proveedores-out')),
 
                 const Divider(color: Colors.grey),
                 const Spacer(),

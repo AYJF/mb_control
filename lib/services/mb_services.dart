@@ -9,6 +9,8 @@ import 'package:mb_control/models/invoice.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
+import 'package:mb_control/models/provider_income.dart';
+import 'package:mb_control/models/provider_outcome.dart';
 import 'package:mb_control/models/user.dart';
 import 'package:mb_control/models/users.dart';
 
@@ -85,6 +87,45 @@ class MbService {
       );
       return response.statusCode == 200
           ? invoiceFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<ProviderIcome>> getProviderIncome({required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/providerInCome"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? providerIncomeFromJson(convert.jsonDecode(response.body))
+          : [];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<ProviderOutcome>> getProviderOutcome(
+      {required String token}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/providerOutCome"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? providerOutcomeFromJson(convert.jsonDecode(response.body))
           : [];
     } catch (e) {
       debugPrint(e.toString());

@@ -5,6 +5,8 @@ import 'package:mb_control/models/invoice.dart';
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/models/operation.dart';
 import 'package:mb_control/models/promoter.dart';
+import 'package:mb_control/models/provider_income.dart';
+import 'package:mb_control/models/provider_outcome.dart';
 import 'package:mb_control/models/user.dart';
 import 'package:mb_control/models/users.dart';
 import 'package:mb_control/services/mb_services.dart';
@@ -129,6 +131,18 @@ class UserHndl with ChangeNotifier {
   Future<List<Invoice>> getInvoices() async {
     return _user.token != null
         ? await mbService.getInvoices(token: _user.token!)
+        : [];
+  }
+
+  Future<List<ProviderIcome>> getProviderIncome() async {
+    return _user.token != null
+        ? await mbService.getProviderIncome(token: _user.token!)
+        : [];
+  }
+
+  Future<List<ProviderOutcome>> getProviderOutcome() async {
+    return _user.token != null
+        ? await mbService.getProviderOutcome(token: _user.token!)
         : [];
   }
 
