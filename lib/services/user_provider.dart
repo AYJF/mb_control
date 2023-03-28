@@ -12,6 +12,42 @@ import 'package:mb_control/models/users.dart';
 import 'package:mb_control/services/mb_services.dart';
 
 class UserHndl with ChangeNotifier {
+  bool _providerFactura = true;
+  bool get providerFactura => _providerFactura;
+
+  Operation? _operation;
+  Operation? get operation => _operation;
+
+  set operation(Operation? value) {
+    _operation = value;
+    notifyListeners();
+  }
+
+  void setOperation(Operation? value) {
+    _operation = value;
+  }
+
+  set providerFactura(bool value) {
+    _providerFactura = value;
+    notifyListeners();
+  }
+
+  bool _providerWithOutFactura = true;
+  bool get providerWithOutFactura => _providerWithOutFactura;
+
+  set providerWithOutFactura(bool value) {
+    _providerWithOutFactura = value;
+    notifyListeners();
+  }
+
+  String _providerName = '';
+  String get providerName => _providerName;
+
+  set providerName(String value) {
+    _providerName = value;
+    notifyListeners();
+  }
+
   DateTime? startDateTime;
   DateTime? endDateTime;
 

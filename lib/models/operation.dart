@@ -14,6 +14,10 @@ class Operation {
   final String? factura;
   final double? totalOperacion;
   final double? subTotalOperacion;
+  final double? comisionTotal;
+  final double? comisionPromoter;
+  final double? comisionUtilidadMB;
+  final double? excedente;
 
   const Operation({
     required this.id,
@@ -27,6 +31,10 @@ class Operation {
     this.factura,
     this.totalOperacion,
     this.subTotalOperacion,
+    this.comisionTotal,
+    this.comisionPromoter,
+    this.comisionUtilidadMB,
+    this.excedente,
   });
   static const empty = Operation(id: null);
 
@@ -42,6 +50,10 @@ class Operation {
         factura: json['factura'],
         totalOperacion: json['totalOperacion'].toDouble(),
         subTotalOperacion: json['subTotalOperacion'].toDouble(),
+        comisionTotal: json['comisionTotal'].toDouble(),
+        comisionPromoter: json['comisionPromoter'].toDouble(),
+        comisionUtilidadMB: json['comisionUtilidadMB'].toDouble(),
+        excedente: json['excedente'].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {

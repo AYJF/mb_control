@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:mb_control/models/operation.dart';
 
 class OperationDTS extends DataTableSource {
-  OperationDTS(this.userData);
+  OperationDTS(
+    this.userData, {
+    required this.onRowSelected,
+  });
   final List<Operation> userData;
+  final Function(Operation operation) onRowSelected;
+
   @override
   DataRow getRow(int index) {
     final user = userData[index];
 
     return DataRow.byIndex(
       index: index,
+      onSelectChanged: (value) {
+        print(value);
+        print(index);
+
+        onRowSelected(userData[index]);
+      },
       cells: [
         DataCell(Text(user.userName ?? "")),
         DataCell(Text(user.promoterName ?? "")),

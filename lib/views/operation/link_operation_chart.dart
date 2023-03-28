@@ -47,13 +47,17 @@ class Indicator extends StatelessWidget {
 class PieChartSample2 extends StatefulWidget {
   const PieChartSample2({
     super.key,
-    required this.data,
     required this.total,
+    required this.comissions,
+    required this.retrono,
+    required this.over,
   });
 
-  final Map<String, dynamic> data;
-
   final double total;
+  final double comissions;
+  final double over;
+  final double retrono;
+
   @override
   State<PieChartSample2> createState() => _PieChartSample2tate();
 }
@@ -65,7 +69,6 @@ class _PieChartSample2tate extends State<PieChartSample2> {
 
   @override
   Widget build(BuildContext context) {
-    int index = 0;
     return AspectRatio(
       aspectRatio: 1.3,
       child: Row(
@@ -103,17 +106,43 @@ class _PieChartSample2tate extends State<PieChartSample2> {
             ),
           ),
           Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widget.data.keys
-                  .map((e) => Column(
-                        children: [
-                          Indicator(
-                              color: colors[index++], text: e, isSquare: true),
-                          const SizedBox(height: 4),
-                        ],
-                      ))
-                  .toList()),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Indicator(
+                color: Colors.blue,
+                text: 'Excedente: ${widget.over}\$',
+                isSquare: true,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Colors.yellow,
+                text: 'Comisiones: ${widget.comissions}\$',
+                isSquare: true,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Colors.purple,
+                text: 'Retorno: ${widget.retrono}\$',
+                isSquare: true,
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Indicator(
+                color: Colors.transparent,
+                text: 'Total: ${widget.total}\$',
+                isSquare: true,
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+            ],
+          ),
           const SizedBox(
             width: 28,
           ),
@@ -123,84 +152,70 @@ class _PieChartSample2tate extends State<PieChartSample2> {
   }
 
   List<PieChartSectionData> showingSections() {
-    int index = 0;
-    const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-    return widget.data.keys
-        .map((e) => PieChartSectionData(
-              color: colors[index++],
-              value: widget.data[e],
-              title: (widget.data[e] * 100 / widget.total).toStringAsFixed(1),
-              radius: 50,
-              titleStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                shadows: shadows,
-              ),
-            ))
-        .toList();
-
-    // return List.generate(4, (i) {
-    //   final isTouched = i == touchedIndex;
-    //   final fontSize = isTouched ? 25.0 : 16.0;
-    //   final radius = isTouched ? 60.0 : 50.0;
-    //   const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-    //   switch (i) {
-    //     case 0:
-    //       return PieChartSectionData(
-    //         color: Colors.blue,
-    //         value: 40,
-    //         title: '40%',
-    //         radius: radius,
-    //         titleStyle: TextStyle(
-    //           fontSize: fontSize,
-    //           fontWeight: FontWeight.bold,
-    //           color: Colors.white,
-    //           shadows: shadows,
-    //         ),
-    //       );
-    //     case 1:
-    //       return PieChartSectionData(
-    //         color: Colors.yellow,
-    //         value: 30,
-    //         title: '30%',
-    //         radius: radius,
-    //         titleStyle: TextStyle(
-    //           fontSize: fontSize,
-    //           fontWeight: FontWeight.bold,
-    //           color: Colors.white,
-    //           shadows: shadows,
-    //         ),
-    //       );
-    //     case 2:
-    //       return PieChartSectionData(
-    //         color: Colors.purple,
-    //         value: 15,
-    //         title: '15%',
-    //         radius: radius,
-    //         titleStyle: TextStyle(
-    //           fontSize: fontSize,
-    //           fontWeight: FontWeight.bold,
-    //           color: Colors.white,
-    //           shadows: shadows,
-    //         ),
-    //       );
-    //     case 3:
-    //       return PieChartSectionData(
-    //         color: Colors.purple,
-    //         value: 15,
-    //         title: '15%',
-    //         radius: radius,
-    //         titleStyle: TextStyle(
-    //           fontSize: fontSize,
-    //           fontWeight: FontWeight.bold,
-    //           color: Colors.white,
-    //           shadows: shadows,
-    //         ),
-    //       );
-    //     default:
-    //       throw Error();
-    //   }
-    // });
+    return List.generate(3, (i) {
+      final isTouched = i == touchedIndex;
+      final fontSize = isTouched ? 25.0 : 16.0;
+      final radius = isTouched ? 60.0 : 50.0;
+      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+      switch (i) {
+        case 0:
+          return PieChartSectionData(
+            color: Colors.blue,
+            value: widget.over * 100 / widget.total,
+            title: '${(widget.over * 100 / widget.total).toStringAsFixed(1)} %',
+            radius: radius,
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: shadows,
+            ),
+          );
+        case 1:
+          return PieChartSectionData(
+            color: Colors.yellow,
+            value: widget.comissions * 100 / widget.total,
+            title:
+                '${(widget.comissions * 100 / widget.total).toStringAsFixed(1)} %',
+            radius: radius,
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: shadows,
+            ),
+          );
+        case 2:
+          return PieChartSectionData(
+            color: Colors.purple,
+            value: widget.retrono * 100 / widget.total,
+            title:
+                '${(widget.retrono * 100 / widget.total).toStringAsFixed(1)} %',
+            radius: radius,
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: shadows,
+            ),
+          );
+        // case 3:
+        //   return PieChartSectionData(
+        //     color: Colors.deepOrange,
+        //     value: 15,
+        //     title: '15%',
+        //     radius: radius,
+        //     titleStyle: TextStyle(
+        //       fontSize: fontSize,
+        //       fontWeight: FontWeight.bold,
+        //       color: Colors.white,
+        //       shadows: shadows,
+        //     ),
+        //   );
+        default:
+          print("dsdsdsdsdsdxxx");
+          throw Error();
+      }
+    });
   }
 }

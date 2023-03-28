@@ -41,13 +41,7 @@ class _OperationTableState extends State<OperationTable> {
                 );
               }
 
-              Map<String, dynamic> _listTem = {};
-              for (var e in snapshot.data!) {
-                if (e.userName == 'Totales') continue;
-                _listTem.containsKey(e.userName!)
-                    ? _listTem[e.userName!] += e.totalOperacion
-                    : _listTem.putIfAbsent(e.userName!, () => e.totalOperacion);
-              }
+              userHndl.setOperation(snapshot.data![0]);
 
               return SingleChildScrollView(
                 child: Padding(
@@ -60,10 +54,10 @@ class _OperationTableState extends State<OperationTable> {
                           child: PaginatedDataTable(
                             header: const Text('Operaciones'),
                             dataRowHeight: 50.0,
-                            rowsPerPage: provider.rowsPerPage,
+                            rowsPerPage: 5,
                             onRowsPerPageChanged: (index) =>
                                 provider.rowsPerPage = index!,
-                            // availableRowsPerPage: const [5, 10, 15, 20],
+                            availableRowsPerPage: const [5, 10, 15, 20],
                             sortAscending: provider.sortAscending,
                             sortColumnIndex: provider.sortColumnIndex,
                             showCheckboxColumn: false,
@@ -76,18 +70,43 @@ class _OperationTableState extends State<OperationTable> {
                               DataColumn(label: Text('Total Operaciones')),
                               DataColumn(label: Text('SubTotal Operaciones')),
                             ],
-                            source: OperationDTS(snapshot.data!),
+                            source: OperationDTS(
+                              snapshot.data!,
+                              onRowSelected: (operation) =>
+                                  userHndl.operation = operation,
+                            ),
                           ),
                         ),
                       ),
-                      PieChartSample2(
-                        data: _listTem,
-                        total: snapshot.data!.last.totalOperacion!,
-                      ),
+                      const SizedBox(height: 12),
+                      const _Chart(),
                     ],
                   ),
                 ),
               );
             }));
+  }
+}
+
+class _Chart extends StatelessWidget {
+  const _Chart();
+
+  @override
+  Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+
+    final double comissions = userHndl.operation!.comisionPromoter! +
+        userHndl.operation!.comisionTotal! +
+        userHndl.operation!.comisionUtilidadMB!;
+
+    final double retorno = userHndl.operation!.totalOperacion! -
+        (comissions + userHndl.operation!.excedente!);
+
+    return PieChartSample2(
+      total: userHndl.operation!.totalOperacion!,
+      over: userHndl.operation!.excedente!,
+      retrono: retorno,
+      comissions: comissions,
+    );
   }
 }

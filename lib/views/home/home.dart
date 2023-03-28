@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mb_control/views/base/base.dart';
 import 'package:mb_control/views/home/components/courusel_linker.dart';
 import 'package:mb_control/views/home/components/operaciones.dart';
+import 'package:mb_control/views/home/components/proveedores.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,7 +20,9 @@ class _HomeState extends State<Home> {
           children: [
             const SizedBox(height: 25),
             const Operaciones(),
-            const SizedBox(height: 55),
+            const SizedBox(height: 15),
+            const Proveedores(),
+            const SizedBox(height: 45),
             const CouruselLinker(),
             const SizedBox(height: 65),
             ElevatedButton(
