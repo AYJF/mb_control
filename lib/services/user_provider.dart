@@ -12,9 +12,6 @@ import 'package:mb_control/models/users.dart';
 import 'package:mb_control/services/mb_services.dart';
 
 class UserHndl with ChangeNotifier {
-  bool _providerFactura = true;
-  bool get providerFactura => _providerFactura;
-
   Operation? _operation;
   Operation? get operation => _operation;
 
@@ -27,6 +24,8 @@ class UserHndl with ChangeNotifier {
     _operation = value;
   }
 
+  bool _providerFactura = true;
+  bool get providerFactura => _providerFactura;
   set providerFactura(bool value) {
     _providerFactura = value;
     notifyListeners();
@@ -45,6 +44,22 @@ class UserHndl with ChangeNotifier {
 
   set providerName(String value) {
     _providerName = value;
+    notifyListeners();
+  }
+
+  String _costoFactura = '';
+  String get costoFactura => _costoFactura;
+
+  set costoFactura(String value) {
+    _costoFactura = value;
+    notifyListeners();
+  }
+
+  String _costoWithoutFactura = '';
+  String get costoWithoutFactura => _costoWithoutFactura;
+
+  set costoWithoutFactura(String value) {
+    _costoWithoutFactura = value;
     notifyListeners();
   }
 
@@ -108,10 +123,18 @@ class UserHndl with ChangeNotifier {
   final MbService mbService = MbService();
 
   String _email = '';
-  String get email => this._email;
+  String get email => _email;
+
+  String _phone = '';
+  String get phone => _phone;
+
+  set phone(String value) {
+    _phone = value;
+    notifyListeners();
+  }
 
   set email(String value) {
-    this._email = value;
+    _email = value;
     notifyListeners();
   }
 
@@ -232,5 +255,31 @@ class UserHndl with ChangeNotifier {
     };
 
     return mbService.createClient(body: body, token: _user.token!);
+  }
+
+  Future<bool> createPromoter() async {
+    final Map<String, dynamic> body = {
+      "name": _name,
+      "userEmail": _user.email,
+      "phone": _phone,
+      "email": _email,
+      "contactByEmail": _contactByEmail,
+      "contactByPhone": _contactByPhone,
+      "models": _models,
+    };
+
+    return mbService.createPromoter(body: body, token: _user.token!);
+  }
+
+  Future<bool> createProviderInCome() async {
+    final Map<String, dynamic> body = {
+      "name": _providerName,
+      "invoiceAmount": _costoFactura,
+      "noInvoiceAmount": _costoWithoutFactura,
+      "invoiceTotal": _providerFactura,
+      "noInvoiceTotal": _providerWithOutFactura
+    };
+
+    return mbService.createProviderInCome(body: body, token: _user.token!);
   }
 }

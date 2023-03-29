@@ -6,6 +6,7 @@ import 'package:mb_control/views/base/base.dart';
 import 'package:mb_control/views/client/models_table.dart';
 import 'package:mb_control/widgets/rounded_input_field.dart';
 import 'package:provider/provider.dart';
+import 'package:rive/math.dart';
 
 class CreatePromoters extends StatefulWidget {
   const CreatePromoters({Key? key}) : super(key: key);
@@ -39,12 +40,12 @@ class _CreatePromotersState extends State<CreatePromoters> {
                   SizedBox(
                     width: 250,
                     child: RoundedInputField(
-                      hintText: "Nombrte",
+                      hintText: "Nombre",
                       icon: Icons.person,
                       validator: (value) {
                         return null;
                       },
-                      onChanged: (value) {},
+                      onChanged: (value) => userHndl.name = value,
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -81,7 +82,7 @@ class _CreatePromotersState extends State<CreatePromoters> {
                         return null;
                       },
                       onChanged: (value) {
-                        userHndl.email = value;
+                        userHndl.phone = value;
                       },
                     ),
                   ),
@@ -97,7 +98,7 @@ class _CreatePromotersState extends State<CreatePromoters> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Email"),
+                        const Text("Email"),
                         SizedBox(
                           width: 56,
                           child: FlutterSwitch(
@@ -112,7 +113,7 @@ class _CreatePromotersState extends State<CreatePromoters> {
                             onToggle: (val) => userHndl.contactByEmail = val,
                           ),
                         ),
-                        Text("WhatsApp"),
+                        const Text("WhatsApp"),
                         SizedBox(
                           width: 56,
                           child: FlutterSwitch(
@@ -138,9 +139,18 @@ class _CreatePromotersState extends State<CreatePromoters> {
                             if (_formKey.currentState!.validate()) {
                               userHndl.isLoading = true;
 
-                              userHndl.models.forEach((element) {
-                                print(element);
-                              });
+                              // userHndl.models.forEach((element) {
+                              //   print(element);
+                              // });
+
+                              // print(userHndl.name);
+                              // print(userHndl.email);
+                              // print(userHndl.phone);
+                              // print(userHndl.contactByEmail);
+                              // print(userHndl.contactByPhone);
+
+                              print(await userHndl.createPromoter());
+
                               userHndl.isLoading = false;
                             }
                           },

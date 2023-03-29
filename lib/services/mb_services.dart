@@ -233,4 +233,40 @@ class MbService {
       return false;
     }
   }
+
+  Future<bool> createPromoter(
+      {required Map<String, dynamic> body, required String token}) async {
+    try {
+      final response = await http.post(Uri.parse("$_apiBaseUrl/promoter"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "Authorization": "Bearer $token"
+          },
+          body: convert.jsonEncode(body));
+
+      return response.statusCode == 204 ? true : false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> createProviderInCome(
+      {required Map<String, dynamic> body, required String token}) async {
+    try {
+      final response = await http.post(Uri.parse("$_apiBaseUrl/providerInCome"),
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+            "Authorization": "Bearer $token"
+          },
+          body: convert.jsonEncode(body));
+
+      return response.statusCode == 204 ? true : false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

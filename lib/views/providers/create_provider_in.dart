@@ -40,7 +40,7 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                           }
                           return null;
                         },
-                        onChanged: (value) {},
+                        onChanged: (value) => userHndl.providerName = value,
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -59,7 +59,7 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                               }
                               return null;
                             },
-                            onChanged: (value) {},
+                            onChanged: (value) => userHndl.costoFactura = value,
                           ),
                         ),
                         Column(
@@ -72,11 +72,12 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                                 height: 25.0,
                                 valueFontSize: 25.0,
                                 toggleSize: 24.0,
-                                value: true,
+                                value: userHndl.providerFactura,
                                 borderRadius: 30.0,
                                 padding: 2.0,
                                 showOnOff: false,
-                                onToggle: (val) {},
+                                onToggle: (val) =>
+                                    userHndl.providerFactura = val,
                               ),
                             ),
                           ],
@@ -99,7 +100,8 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                               }
                               return null;
                             },
-                            onChanged: (value) {},
+                            onChanged: (value) =>
+                                userHndl.costoWithoutFactura = value,
                           ),
                         ),
                         Column(
@@ -112,11 +114,12 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                                 height: 25.0,
                                 valueFontSize: 25.0,
                                 toggleSize: 24.0,
-                                value: true,
+                                value: userHndl.providerWithOutFactura,
                                 borderRadius: 30.0,
                                 padding: 2.0,
                                 showOnOff: false,
-                                onToggle: (val) {},
+                                onToggle: (val) =>
+                                    userHndl.providerWithOutFactura = val,
                               ),
                             ),
                           ],
@@ -131,9 +134,7 @@ class _CreateProviderInState extends State<CreateProviderIn> {
                               if (_formKey.currentState!.validate()) {
                                 userHndl.isLoading = true;
 
-                                // userHndl.models.forEach((element) {
-                                //   print(element);
-                                // });
+                                print(await userHndl.createProviderInCome());
 
                                 userHndl.isLoading = false;
                               }
