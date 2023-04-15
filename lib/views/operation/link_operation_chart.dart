@@ -111,7 +111,7 @@ class _PieChartSample2tate extends State<PieChartSample2> {
             children: <Widget>[
               Indicator(
                 color: Colors.blue,
-                text: 'Excedente: ${widget.over}\$',
+                text: 'Excedente: ${widget.over.toStringAsFixed(2)}\$',
                 isSquare: true,
               ),
               const SizedBox(
@@ -119,7 +119,7 @@ class _PieChartSample2tate extends State<PieChartSample2> {
               ),
               Indicator(
                 color: Colors.yellow,
-                text: 'Comisiones: ${widget.comissions}\$',
+                text: 'Comisiones: ${widget.comissions.toStringAsFixed(2)}\$',
                 isSquare: true,
               ),
               const SizedBox(
@@ -127,7 +127,7 @@ class _PieChartSample2tate extends State<PieChartSample2> {
               ),
               Indicator(
                 color: Colors.purple,
-                text: 'Retorno: ${widget.retrono}\$',
+                text: 'Retorno: ${widget.retrono.toStringAsFixed(2)}\$',
                 isSquare: true,
               ),
               const SizedBox(
@@ -135,7 +135,7 @@ class _PieChartSample2tate extends State<PieChartSample2> {
               ),
               Indicator(
                 color: Colors.transparent,
-                text: 'Total: ${widget.total}\$',
+                text: 'Total: ${widget.total.toStringAsFixed(2)}\$',
                 isSquare: true,
               ),
               const SizedBox(

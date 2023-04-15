@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:mb_control/views/base/base.dart';
 import 'package:mb_control/views/client/models_table.dart';
+import 'package:mb_control/views/operation/invoice_drop_down.dart';
+import 'package:mb_control/views/operation/operation_next_folio.dart';
 import 'package:mb_control/widgets/clients_dropdown.dart';
 import 'package:mb_control/widgets/comany_dropdown.dart';
 import 'package:provider/provider.dart';
-import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class Retorno extends StatefulWidget {
@@ -28,104 +29,23 @@ class _RetornoState extends State<Retorno> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ToggleSwitch(
-                minWidth: 110.0,
-                minHeight: 35.0,
-                fontSize: 12.0,
-                initialLabelIndex: userHndl.wInvoice,
-                activeBgColor: const [Colors.green],
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveFgColor: Colors.grey[900],
-                totalSwitches: 2,
-                labels: const ['CON FACTURA', 'SIN FACTURA'],
-                onToggle: (index) {
-                  userHndl.wInvoice = index!;
-                },
-              ),
+              const _InvoiceSwitch(),
               const SizedBox(height: 15),
               const ClientesDropdown(),
               const SizedBox(height: 15),
               const EmpresasDropDown(),
               const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (userHndl.wInvoice == 0)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Factura"),
-                        Container(
-                          width: 80,
-                          padding: const EdgeInsets.all(8.0),
-                          child: StepperSwipe(
-                            initialValue: 0,
-                            speedTransitionLimitCount: 3,
-                            onChanged: (int value) {},
-
-                            firstIncrementDuration: const Duration(
-                                milliseconds:
-                                    250), //Unit time before fast counting
-                            secondIncrementDuration: const Duration(
-                                milliseconds:
-                                    100), //Unit time during fast counting
-                            direction: Axis.horizontal,
-                            dragButtonColor: Colors.blueAccent,
-                            maxValue: 50,
-                            minValue: 0,
-                            stepperValue: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  if (userHndl.total == 0)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Total"),
-                        Container(
-                          width: 80,
-                          padding: const EdgeInsets.all(8.0),
-                          child: StepperSwipe(
-                            initialValue: 0,
-                            speedTransitionLimitCount: 3,
-                            onChanged: (int value) {},
-
-                            firstIncrementDuration: const Duration(
-                                milliseconds:
-                                    250), //Unit time before fast counting
-                            secondIncrementDuration: const Duration(
-                                milliseconds:
-                                    100), //Unit time during fast counting
-                            direction: Axis.horizontal,
-                            dragButtonColor: Colors.blueAccent,
-                            maxValue: 50,
-                            minValue: 0,
-                            stepperValue: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                ],
-              ),
-              ToggleSwitch(
-                minWidth: 110.0,
-                minHeight: 35.0,
-                fontSize: 12.0,
-                initialLabelIndex: userHndl.total,
-                activeBgColor: const [Colors.green],
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveFgColor: Colors.grey[900],
-                totalSwitches: 2,
-                labels: const ['TOTAL', 'PARCIAL'],
-                onToggle: (index) {
-                  userHndl.total = index!;
-                },
-              ),
-              const ModelsTable(
-                showLastColumn: false,
+              const InvoiceDropDown(),
+              const SizedBox(height: 15),
+              const OperationNextFolio(),
+              const SizedBox(height: 15),
+              const _TotalSwitch(),
+              const SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ModelsTable(
+                  showLastColumn: false,
+                  showProviders: true,
+                ),
               ),
               const SizedBox(height: 25),
               userHndl.isLoading
@@ -147,10 +67,59 @@ class _RetornoState extends State<Retorno> {
                         ),
                       ),
                     ),
+              const SizedBox(height: 15),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _InvoiceSwitch extends StatelessWidget {
+  const _InvoiceSwitch();
+
+  @override
+  Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+    return ToggleSwitch(
+      minWidth: 110.0,
+      minHeight: 35.0,
+      fontSize: 12.0,
+      initialLabelIndex: userHndl.wInvoice,
+      activeBgColor: const [Colors.green],
+      activeFgColor: Colors.white,
+      inactiveBgColor: Colors.grey,
+      inactiveFgColor: Colors.grey[900],
+      totalSwitches: 2,
+      labels: const ['CON FACTURA', 'SIN FACTURA'],
+      onToggle: (index) {
+        userHndl.wInvoice = index!;
+      },
+    );
+  }
+}
+
+class _TotalSwitch extends StatelessWidget {
+  const _TotalSwitch();
+
+  @override
+  Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+    return ToggleSwitch(
+      minWidth: 110.0,
+      minHeight: 35.0,
+      fontSize: 12.0,
+      initialLabelIndex: userHndl.total,
+      activeBgColor: const [Colors.green],
+      activeFgColor: Colors.white,
+      inactiveBgColor: Colors.grey,
+      inactiveFgColor: Colors.grey[900],
+      totalSwitches: 2,
+      labels: const ['TOTAL', 'PARCIAL'],
+      onToggle: (index) {
+        userHndl.total = index!;
+      },
     );
   }
 }

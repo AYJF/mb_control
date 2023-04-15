@@ -28,7 +28,8 @@ class EmpresasDropDown extends StatelessWidget {
                 ),
               ),
               onChanged: (String? value) {
-                userHndl.promoterID = value;
+                userHndl.companyId = value ?? "";
+                print(userHndl.companyId);
               },
               items: snapshot.data!.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(

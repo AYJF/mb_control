@@ -7,23 +7,15 @@ List<ProviderOutcome> providerOutcomeFromJson(List list) {
 class ProviderOutcome {
   final String? id;
   final String? name;
-  final double? charge;
-  final bool? totalCharge;
-  final List<Model>? models;
+  final List<ProviderOutComeModel>? models;
 
   const ProviderOutcome(
-      {required this.id,
-      required this.name,
-      required this.charge,
-      required this.totalCharge,
-      required this.models});
+      {required this.id, required this.name, required this.models});
 
   factory ProviderOutcome.fromJson(Map<String, dynamic> json) =>
       ProviderOutcome(
         id: json['id'],
         name: json['name'],
-        charge: json['charge'].toDouble(),
-        totalCharge: json['totalCharge'],
-        models: modelFromJson(json['models']),
+        models: providerOutComeModelFromJson(json['providerOutComeModels']),
       );
 }

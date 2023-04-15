@@ -69,6 +69,7 @@ class _OperationTableState extends State<OperationTable> {
                               DataColumn(label: Text('Factura')),
                               DataColumn(label: Text('Total Operaciones')),
                               DataColumn(label: Text('SubTotal Operaciones')),
+                              DataColumn(label: Text('Chart'))
                             ],
                             source: OperationDTS(
                               snapshot.data!,

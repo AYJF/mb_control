@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mb_control/services/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class ModelsDropDown extends StatelessWidget {
-  const ModelsDropDown({super.key});
+class ProviderInDropDown extends StatelessWidget {
+  const ProviderInDropDown({super.key});
 
   @override
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
     return FutureBuilder(
-      future: userHndl.getModels(),
+      future: userHndl.getProviderIncome(),
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return const Center(child: CircularProgressIndicator());
@@ -27,13 +27,11 @@ class ModelsDropDown extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 ),
               ),
-              onChanged: (String? value) {
-                userHndl.modelID = value ?? "";
-              },
+              onChanged: (String? value) {},
               items: snapshot.data!.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
                   value: value.id,
-                  child: Text(value.name ?? ""),
+                  child: Text(value.name?.toString() ?? ""),
                 );
               }).toList(),
             ),

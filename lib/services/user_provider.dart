@@ -15,6 +15,30 @@ class UserHndl with ChangeNotifier {
   Operation? _operation;
   Operation? get operation => _operation;
 
+  String _invoiceNumber = '';
+  String get invoiceNumber => _invoiceNumber;
+
+  String _operationNextFolio = '';
+  String get operationNextFolio => _operationNextFolio;
+
+  set operationNextFolio(String value) {
+    _operationNextFolio = value;
+    notifyListeners();
+  }
+
+  set invoiceNumber(String value) {
+    _invoiceNumber = value;
+    notifyListeners();
+  }
+
+  String _invoiceAmount = '';
+  get invoiceAmount => _invoiceAmount;
+
+  set invoiceAmount(value) {
+    _invoiceAmount = value;
+    notifyListeners();
+  }
+
   set operation(Operation? value) {
     _operation = value;
     notifyListeners();
@@ -36,6 +60,22 @@ class UserHndl with ChangeNotifier {
 
   set providerWithOutFactura(bool value) {
     _providerWithOutFactura = value;
+    notifyListeners();
+  }
+
+  String _invoiceId = '';
+  String get invoiceId => _invoiceId;
+
+  set invoiceId(String value) {
+    _invoiceId = value;
+    notifyListeners();
+  }
+
+  String _companyId = '';
+  String get companyId => _companyId;
+
+  set companyId(String value) {
+    _companyId = value;
     notifyListeners();
   }
 
@@ -65,6 +105,22 @@ class UserHndl with ChangeNotifier {
 
   DateTime? startDateTime;
   DateTime? endDateTime;
+
+  String _clientID = '';
+  String get clientID => _clientID;
+
+  set clientID(String value) {
+    _clientID = value;
+    notifyListeners();
+  }
+
+  String _modelID = '';
+  String get modelID => this._modelID;
+
+  set modelID(String value) {
+    _modelID = value;
+    notifyListeners();
+  }
 
   String? linkerEmail = '';
   String? _promoterID = "";
@@ -182,21 +238,42 @@ class UserHndl with ChangeNotifier {
   }
 
   Future<List<Promoter>> getPromoters() async {
-    return _user.token != null
-        ? await mbService.getPromoters(token: _user.token!)
-        : [];
+    if (_user.token != null) {
+      final promotores = await mbService.getPromoters(token: _user.token!);
+
+      _promoterID = promotores.first.id!;
+      return promotores;
+    } else {
+      return [];
+    }
   }
 
   Future<List<Invoice>> getInvoices() async {
-    return _user.token != null
-        ? await mbService.getInvoices(token: _user.token!)
-        : [];
+    if (_user.token != null) {
+      final invoices = await mbService.getInvoices(token: _user.token!);
+
+      _invoiceId = invoices.first.id!;
+      return invoices;
+    } else {
+      return [];
+    }
   }
 
   Future<List<ProviderIcome>> getProviderIncome() async {
     return _user.token != null
         ? await mbService.getProviderIncome(token: _user.token!)
         : [];
+  }
+
+  Future<String> getOperationNextFolio() async {
+    if (_user.token != null) {
+      _operationNextFolio = await mbService.getOperationNextFolio(
+          token: _user.token!, userEmail: _user.email!);
+
+      return _operationNextFolio;
+    } else {
+      return "";
+    }
   }
 
   Future<List<ProviderOutcome>> getProviderOutcome() async {
@@ -212,9 +289,14 @@ class UserHndl with ChangeNotifier {
   }
 
   Future<List<UserClient>> getClients() async {
-    return _user.token != null
-        ? await mbService.getClients(token: _user.token!)
-        : [];
+    if (_user.token != null) {
+      final clients = await mbService.getClients(token: _user.token!);
+
+      _clientID = clients.first.id!;
+      return clients;
+    } else {
+      return [];
+    }
   }
 
   Future<List<Operation>> getOperations() async {
@@ -229,9 +311,14 @@ class UserHndl with ChangeNotifier {
   }
 
   Future<List<Company>> getCompanies() async {
-    return _user.token != null
-        ? await mbService.getCompanies(token: _user.token!)
-        : [];
+    if (_user.token != null) {
+      final companies = await mbService.getCompanies(token: _user.token!);
+
+      _companyId = companies.first.id!;
+      return companies;
+    } else {
+      return [];
+    }
   }
 
   Future<List<Model>> getModels() async {
@@ -242,6 +329,9 @@ class UserHndl with ChangeNotifier {
 
     models.addAll(
         dbModels.map((e) => {"modelId": e.id, "hasIva": false, "value": 0}));
+
+    _modelID = models.first["modelId"];
+
     return dbModels;
   }
 

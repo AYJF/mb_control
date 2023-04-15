@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mb_control/models/operation.dart';
+import 'package:mb_control/views/operation/operation_chart.dart';
 
 class OperationDTS extends DataTableSource {
   OperationDTS(
@@ -29,6 +30,7 @@ class OperationDTS extends DataTableSource {
         DataCell(Text(user.factura ?? "")),
         DataCell(Text(user.totalOperacion.toString())),
         DataCell(Text(user.subTotalOperacion.toString())),
+        DataCell(_ChartBtn(user: user))
       ],
     );
   }
@@ -41,4 +43,26 @@ class OperationDTS extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+class _ChartBtn extends StatelessWidget {
+  const _ChartBtn({
+    required this.user,
+  });
+
+  final Operation user;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => OperationChart(operation: user)),
+            ),
+        icon: const Icon(
+          Icons.bar_chart_sharp,
+          color: Colors.green,
+        ));
+  }
 }

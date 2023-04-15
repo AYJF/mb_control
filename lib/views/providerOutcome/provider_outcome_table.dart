@@ -45,8 +45,8 @@ class _ProviderOutcomeTableState extends State<ProviderOutcomeTable> {
                       sortAscending: _provider.sortAscending,
                       columns: const [
                         DataColumn(label: Text('Nombre')),
-                        DataColumn(label: Text('Cargo')),
-                        DataColumn(label: Text('Cargo total')),
+                        // DataColumn(label: Text('Cargo')),
+                        // DataColumn(label: Text('Cargo total')),
                         DataColumn(label: Text('Modelos')),
                       ],
                       source: ProviderOutcomeDTS(snapshot.data!),

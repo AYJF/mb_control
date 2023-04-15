@@ -47,15 +47,24 @@ class _BaseState extends State<Base> {
             color: const Color(0xFF000B49),
             child: Row(
               children: [
-                Expanded(
-                    flex: 2,
-                    child: IconButton(
-                        onPressed: () =>
-                            _scaffoldKey.currentState?.openDrawer(),
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                        ))),
+                widget.showBackBtn
+                    ? Expanded(
+                        flex: 2,
+                        child: IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            )))
+                    : Expanded(
+                        flex: 2,
+                        child: IconButton(
+                            onPressed: () =>
+                                _scaffoldKey.currentState?.openDrawer(),
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                            ))),
                 Expanded(
                   flex: 8,
                   child: Center(

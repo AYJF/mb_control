@@ -133,6 +133,26 @@ class MbService {
     }
   }
 
+  Future<String> getOperationNextFolio(
+      {required String token, required String userEmail}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/operation/nextFolio/$userEmail"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? convert.jsonDecode(response.body)
+          : "";
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
   Future<List<Company>> getCompanies({required String token}) async {
     try {
       final response = await http.get(

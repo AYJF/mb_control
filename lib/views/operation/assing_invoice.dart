@@ -36,12 +36,15 @@ class _AssingInvoiceState extends State<AssingInvoice> {
                 SizedBox(
                   width: 250,
                   child: RoundedInputField(
-                    hintText: "Numero de FActura",
+                    hintText: "Numero de Factura",
                     icon: Icons.person,
                     validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Factura no valida';
+                      }
                       return null;
                     },
-                    onChanged: (value) {},
+                    onChanged: (value) => userHndl.invoiceNumber = value,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -51,14 +54,12 @@ class _AssingInvoiceState extends State<AssingInvoice> {
                     hintText: "Monto",
                     icon: Icons.money_rounded,
                     validator: (value) {
-                      // if (value == null ||
-                      //     value.isEmpty ||
-                      //     !EmailValidator.validate(value)) {
-                      //   return 'Email is not valid';
-                      // }
+                      if (value == null || value.isEmpty) {
+                        return 'Monto no valido';
+                      }
                       return null;
                     },
-                    onChanged: (value) {},
+                    onChanged: (value) => userHndl.invoiceAmount = value,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -69,9 +70,11 @@ class _AssingInvoiceState extends State<AssingInvoice> {
                           if (_formKey.currentState!.validate()) {
                             userHndl.isLoading = true;
 
-                            userHndl.models.forEach((element) {
-                              print(element);
-                            });
+                            print(userHndl.invoiceAmount);
+                            print(userHndl.invoiceNumber);
+                            print(userHndl.clientID);
+                            print(userHndl.companyId);
+                            print(userHndl.modelID);
                             userHndl.isLoading = false;
                           }
                         },

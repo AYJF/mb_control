@@ -12,21 +12,21 @@ class ProviderOutcomeDTS extends DataTableSource {
       index: index,
       cells: [
         DataCell(Text(user.name ?? "")),
-        DataCell(Text(user.charge.toString())),
-        DataCell(user.totalCharge!
-            ? const Icon(
-                Icons.check_circle,
-                color: Colors.green,
-              )
-            : const Icon(
-                Icons.error,
-                color: Colors.red,
-              )),
+        // DataCell(Text(user.charge.toString())),
+        // DataCell(user.totalCharge!
+        //     ? const Icon(
+        //         Icons.check_circle,
+        //         color: Colors.green,
+        //       )
+        //     : const Icon(
+        //         Icons.error,
+        //         color: Colors.red,
+        //       )),
         DataCell(Text(user.models
                 ?.fold<String>(
                     "",
                     (previousValue, element) =>
-                        "${element.name},$previousValue")
+                        "${element.modelName},$previousValue")
                 .toString() ??
             "")),
       ],

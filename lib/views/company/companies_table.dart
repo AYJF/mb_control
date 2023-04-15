@@ -38,7 +38,7 @@ class _CompaniesTableState extends State<CompaniesTable> {
                   width: 600.0,
                   child: SingleChildScrollView(
                     child: PaginatedDataTable(
-                      header: const Text('Promoters'),
+                      header: const Text('Empresas'),
                       showCheckboxColumn: true,
                       onRowsPerPageChanged: (index) =>
                           provider.rowsPerPage = index!,

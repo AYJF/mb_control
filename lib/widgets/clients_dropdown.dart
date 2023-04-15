@@ -28,7 +28,7 @@ class ClientesDropdown extends StatelessWidget {
                 ),
               ),
               onChanged: (String? value) {
-                userHndl.promoterID = value;
+                userHndl.clientID = value ?? "";
               },
               items: snapshot.data!.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
