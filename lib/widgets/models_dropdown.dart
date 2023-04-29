@@ -9,7 +9,7 @@ class ModelsDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
     return FutureBuilder(
-      future: userHndl.getModels(),
+      future: userHndl.getClientsModels(),
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return const Center(child: CircularProgressIndicator());

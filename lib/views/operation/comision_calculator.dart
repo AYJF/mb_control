@@ -1,15 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
+
 import 'package:mb_control/models/model.dart';
 import 'package:mb_control/services/user_provider.dart';
+import 'package:mb_control/views/base/base.dart';
+import 'package:mb_control/views/client/models_table.dart';
 import 'package:mb_control/views/operation/provider_in_dropdown.dart';
 import 'package:mb_control/views/operation/provider_out_dropdown.dart';
-import 'package:provider/provider.dart';
-// import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 
-class ModelsTable extends StatelessWidget {
-  const ModelsTable({
+import 'package:mb_control/widgets/models_dropdown.dart';
+import 'package:mb_control/widgets/rounded_input_field.dart';
+import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
+
+class ComisionCalculator extends StatelessWidget {
+  const ComisionCalculator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+    return Base(
+        title: 'Calculadora de comisiones',
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                // const _InvoiceSwitch(),
+                // const SizedBox(height: 10),
+                // userHndl.realVirtual == 1
+                //     ? Container()
+                //     : const ClientesDropdown(),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: 250,
+                  child: RoundedInputField(
+                      hintText: "Total",
+                      icon: Icons.calculate,
+                      validator: (value) {
+                        return null;
+                      },
+                      onChanged: (value) {
+                        userHndl.totalOperation = double.tryParse(value) ?? 0.0;
+                      }),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Promotor',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                ),
+                const SizedBox(height: 10),
+                const ModelsTable(
+                  lastColumnName: 'PISO/%',
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Cliente',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                ),
+                const SizedBox(height: 10),
+                const ModelsTable(),
+                const ModelsDropDown(),
+                const SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: _ModelsTable(
+                    showLastColumn: false,
+                    showProviders: true,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                userHndl.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          await userHndl.createOperationCalculator();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(36)),
+                          minimumSize: const Size(200, 50),
+                        ),
+                        child: const Text(
+                          'Guardar',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                const SizedBox(height: 25),
+              ],
+            ),
+          ),
+        ));
+  }
+}
+
+class _ModelsTable extends StatelessWidget {
+  const _ModelsTable({
     Key? key,
     this.lastColumnName = 'CONIVA/IVA',
     this.showLastColumn = true,
@@ -18,14 +107,13 @@ class ModelsTable extends StatelessWidget {
 
   final String lastColumnName;
   final bool showLastColumn;
+
   final bool showProviders;
   @override
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
     return FutureBuilder(
-      future: lastColumnName == 'CONIVA/IVA'
-          ? userHndl.getClientsModels()
-          : userHndl.getPromoterModels(),
+      future: userHndl.getModel(),
       builder: (context, snapshot) {
         if (snapshot.data == null) {
           return const Center(
@@ -138,37 +226,15 @@ class _TableWidgetState extends State<_TableWidget> {
                   ),
                 ),
               ),
-              if (widget.showLastColumn)
-                DataCell(
-                  SizedBox(
-                    width: 56,
-                    child: FlutterSwitch(
-                      width: 50.0,
-                      height: 25.0,
-                      valueFontSize: 25.0,
-                      toggleSize: 24.0,
-                      value: status[e.key],
-                      borderRadius: 30.0,
-                      padding: 2.0,
-                      showOnOff: false,
-                      onToggle: (val) {
-                        widget.lastColumnName == 'CONIVA/IVA'
-                            ? userHndl.models[e.key]['hasIva'] = val
-                            : userHndl.modelsPromoters[e.key]['isPercent'] =
-                                val;
-                        setState(() {
-                          status[e.key] = val;
-                        });
-                      },
-                    ),
-                  ),
-                ),
               if (widget.showProviders)
                 DataCell(
                   SizedBox(
                       width: 256,
                       child: ProviderInDropDown(
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          userHndl.operationsModels[e.key]['providerIncomeId'] =
+                              value;
+                        },
                       )),
                 ),
               if (widget.showProviders)
@@ -176,12 +242,39 @@ class _TableWidgetState extends State<_TableWidget> {
                   SizedBox(
                       width: 256,
                       child: ProviderOutDropDown(
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          userHndl.operationsModels[e.key]
+                              ['providerOutcomeId'] = value;
+                        },
                       )),
                 ),
             ]),
           )
           .toList(),
+    );
+  }
+}
+
+class _InvoiceSwitch extends StatelessWidget {
+  const _InvoiceSwitch();
+
+  @override
+  Widget build(BuildContext context) {
+    final UserHndl userHndl = Provider.of<UserHndl>(context);
+    return ToggleSwitch(
+      minWidth: 110.0,
+      minHeight: 35.0,
+      fontSize: 12.0,
+      initialLabelIndex: userHndl.realVirtual,
+      activeBgColor: const [Colors.green],
+      activeFgColor: Colors.white,
+      inactiveBgColor: Colors.grey,
+      inactiveFgColor: Colors.grey[900],
+      totalSwitches: 2,
+      labels: const ['REAL', 'VIRTUAL'],
+      onToggle: (index) {
+        userHndl.realVirtual = index!;
+      },
     );
   }
 }

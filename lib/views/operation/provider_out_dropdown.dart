@@ -3,8 +3,11 @@ import 'package:mb_control/services/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProviderOutDropDown extends StatelessWidget {
-  const ProviderOutDropDown({super.key});
-
+  const ProviderOutDropDown({
+    super.key,
+    required this.onChanged,
+  });
+  final ValueChanged<String?>? onChanged;
   @override
   Widget build(BuildContext context) {
     final UserHndl userHndl = Provider.of<UserHndl>(context);
@@ -27,7 +30,7 @@ class ProviderOutDropDown extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 ),
               ),
-              onChanged: (String? value) {},
+              onChanged: onChanged,
               items: snapshot.data!.map<DropdownMenuItem<String>>((value) {
                 return DropdownMenuItem<String>(
                   value: value.id,

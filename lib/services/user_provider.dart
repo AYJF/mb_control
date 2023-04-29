@@ -126,14 +126,41 @@ class UserHndl with ChangeNotifier {
   String? _promoterID = "";
   String? get promoterID => this._promoterID;
 
+  List<Map> _operationsModels = [];
+  List<Map> get operationsModels => this._operationsModels;
+
+  set operationsModels(List<Map> oper) {
+    _operationsModels = oper;
+    notifyListeners();
+  }
+
   List<Map> _models = [];
   List<Map> get models => this._models;
+
+  List<Map> _modelsPromoters = [];
+  List<Map> get modelsPromoters => this._modelsPromoters;
 
   bool _contactByEmail = false;
   bool get contactByEmail => this._contactByEmail;
 
   set contactByEmail(bool value) {
     this._contactByEmail = value;
+    notifyListeners();
+  }
+
+  double _totalOperation = 0;
+  double get totalOperation => this._totalOperation;
+
+  set totalOperation(double value) {
+    this._totalOperation = value;
+    notifyListeners();
+  }
+
+  int _realVirtual = 0;
+  int get realVirtual => this._realVirtual;
+
+  set realVirtual(int value) {
+    this._realVirtual = value;
     notifyListeners();
   }
 
@@ -321,7 +348,7 @@ class UserHndl with ChangeNotifier {
     }
   }
 
-  Future<List<Model>> getModels() async {
+  Future<List<Model>> getClientsModels() async {
     _models.clear();
     final List<Model> dbModels = _user.token != null
         ? await mbService.getModel(token: _user.token!)
@@ -331,6 +358,36 @@ class UserHndl with ChangeNotifier {
         dbModels.map((e) => {"modelId": e.id, "hasIva": false, "value": 0}));
 
     _modelID = models.first["modelId"];
+
+    return dbModels;
+  }
+
+  Future<List<Model>> getPromoterModels() async {
+    _modelsPromoters.clear();
+    final List<Model> dbModels = _user.token != null
+        ? await mbService.getModel(token: _user.token!)
+        : [];
+
+    _modelsPromoters.addAll(dbModels.map((e) =>
+        {"modelId": e.id, "isPercent": false, "comercialCost": 0, "value": 0}));
+
+    return dbModels;
+  }
+
+  Future<List<Model>> getModel() async {
+    _operationsModels.clear();
+    final List<Model> dbModels = [];
+    _user.token != null
+        ? dbModels.add(
+            await mbService.getModelbyId(token: _user.token!, id: _modelID))
+        : [];
+
+    _operationsModels.addAll(dbModels.map((e) => {
+          "modelId": e.id,
+          "retorno": 0,
+          "providerIncomeId": "",
+          "providerOutcomeId": ""
+        }));
 
     return dbModels;
   }
@@ -371,5 +428,19 @@ class UserHndl with ChangeNotifier {
     };
 
     return mbService.createProviderInCome(body: body, token: _user.token!);
+  }
+
+  Future<bool> createOperationCalculator() async {
+    final Map<String, dynamic> body = {
+      "totalOperacion": _totalOperation,
+      "isTotalRetorno": true,
+      "isComisionCalculator": true,
+      "hasInvoice": true,
+      "clientsModels": _models,
+      "promotersModels": _modelsPromoters,
+      "operationsModels": _operationsModels,
+    };
+
+    return mbService.createComision(body: body, token: _user.token!);
   }
 }

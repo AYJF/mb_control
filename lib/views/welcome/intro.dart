@@ -115,7 +115,7 @@ class _IntroState extends State<Intro> {
                               fontSize: 34, fontWeight: FontWeight.w700),
                         ),
                         content: SizedBox(
-                          height: 500,
+                          height: 360,
                           width: size.width * 0.95,
                           child: Column(
                             children: const [

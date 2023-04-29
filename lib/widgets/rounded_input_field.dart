@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:mb_control/tools/color_hex.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String? hintText;
@@ -28,23 +27,23 @@ class RoundedInputField extends StatelessWidget {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(width: 1, color: HexColor('#C2CFF0')),
+          borderSide: const BorderSide(width: 1, color: Colors.black),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16.0),
-          borderSide: BorderSide(width: 1, color: HexColor('#C2CFF0')),
+          borderSide: const BorderSide(width: 1, color: Colors.black),
         ),
         filled: true,
-        hintStyle: TextStyle(
-          color: HexColor('#CFCCCC'),
+        hintStyle: const TextStyle(
+          color: Colors.black,
           fontWeight: FontWeight.w600,
           fontSize: 12,
         ),
         hintText: hintText,
-        fillColor: HexColor('#FFFFFF'),
+        fillColor: Colors.white,
         prefixIcon: Icon(
           icon ?? MaterialIcons.email,
-          color: HexColor('#C2CFF0'),
+          color: Colors.black,
         ),
       ),
     );

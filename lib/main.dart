@@ -7,6 +7,7 @@ import 'package:mb_control/views/company/create_company.dart';
 import 'package:mb_control/views/home/home.dart';
 import 'package:mb_control/views/invoice/invoice_table.dart';
 import 'package:mb_control/views/operation/assing_invoice.dart';
+import 'package:mb_control/views/operation/comision_calculator.dart';
 import 'package:mb_control/views/operation/operantion_table.dart';
 import 'package:mb_control/views/operation/retorno.dart';
 import 'package:mb_control/views/promoters/promoter_table_handler.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
           '/proveedores-in': (_) => const ProviderIcomeTable(),
           '/proveedores-out': (_) => const ProviderOutcomeTable(),
           'create-provider-in': (_) => const CreateProviderIn(),
+          '/comision-calculator': (_) => const ComisionCalculator(),
         },
       ),
     );

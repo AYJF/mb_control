@@ -236,6 +236,26 @@ class MbService {
     }
   }
 
+  Future<Model> getModelbyId(
+      {required String token, required String id}) async {
+    try {
+      final response = await http.get(
+        Uri.parse("$_apiBaseUrl/model/$id"),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+      );
+      return response.statusCode == 200
+          ? Model.fromJson(convert.jsonDecode(response.body))
+          : Model.empty;
+    } catch (e) {
+      debugPrint(e.toString());
+      return Model.empty;
+    }
+  }
+
   Future<bool> createClient(
       {required Map<String, dynamic> body, required String token}) async {
     try {
@@ -282,6 +302,25 @@ class MbService {
             "Authorization": "Bearer $token"
           },
           body: convert.jsonEncode(body));
+
+      return response.statusCode == 204 ? true : false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> createComision(
+      {required Map<String, dynamic> body, required String token}) async {
+    try {
+      final response =
+          await http.post(Uri.parse("$_apiBaseUrl/operation/calculator"),
+              headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json',
+                "Authorization": "Bearer $token"
+              },
+              body: convert.jsonEncode(body));
 
       return response.statusCode == 204 ? true : false;
     } catch (e) {

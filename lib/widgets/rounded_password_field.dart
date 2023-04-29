@@ -35,15 +35,15 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16.0),
-            borderSide: BorderSide(width: 1, color: HexColor('#C2CFF0')),
+            borderSide: const BorderSide(width: 1, color: Colors.black),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16.0),
-            borderSide: BorderSide(width: 1, color: HexColor('#C2CFF0')),
+            borderSide: const BorderSide(width: 1, color: Colors.black),
           ),
           filled: true,
-          hintStyle: TextStyle(
-            color: HexColor('#CFCCCC'),
+          hintStyle: const TextStyle(
+            color: Colors.black,
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),
@@ -59,13 +59,10 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
                     ? MaterialCommunityIcons.eye_off_outline
                     : MaterialCommunityIcons.eye_outline,
                 size: 20,
-                color: HexColor('#C2CFF0'),
+                color: Colors.black,
               )),
-          fillColor: HexColor('#FFFFFF'),
-          prefixIcon: Icon(
-            Entypo.lock,
-            color: HexColor('#C2CFF0'),
-          )),
+          fillColor: Colors.white,
+          prefixIcon: const Icon(Entypo.lock, color: Colors.black)),
     );
   }
 }

@@ -55,7 +55,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               bottomRight: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
-            color: Color(0xFF000B49),
+            color: Colors.black,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -112,6 +112,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     title: 'Facturas',
                     infoCount: 0,
                     onTap: () => Navigator.of(context).pushNamed('/invoices')),
+                CustomListTile(
+                    isCollapsed: _isCollapsed,
+                    icon: Icons.drag_indicator_sharp,
+                    title: 'Calculadora Comisiones',
+                    infoCount: 0,
+                    onTap: () => Navigator.of(context)
+                        .pushNamed('/comision-calculator')),
                 CustomListTile(
                     isCollapsed: _isCollapsed,
                     icon: Icons.calculate,

@@ -35,11 +35,12 @@ class CouruselLinker extends StatelessWidget {
                         border: Border.all(color: Colors.transparent),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20)),
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "assets/images/backgrounds/online-users.png"),
-                          fit: BoxFit.cover,
-                        ),
+                        color: Colors.yellow.shade800,
+                        // image: const DecorationImage(
+                        //   image: AssetImage(
+                        //       "assets/images/backgrounds/online-users.png"),
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                       child: Center(
                         child: Column(

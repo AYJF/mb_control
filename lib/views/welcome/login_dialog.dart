@@ -35,14 +35,13 @@ class _LoginDialogState extends State<LoginDialog> {
                     if (_formKey.currentState!.validate()) {
                       userHndl.isLoading = true;
 
-                      print("aqui es la cosa");
                       final bool isValid = await userHndl.login();
                       userHndl.isLoading = false;
                       if (isValid) Navigator.of(context).pushNamed('/home');
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: HexColor("#F77D8E"),
+                    backgroundColor: Colors.yellow,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
                     minimumSize: const Size(300, 50),
@@ -57,16 +56,16 @@ class _LoginDialogState extends State<LoginDialog> {
                   ),
                 ),
           const SizedBox(height: 18),
-          const OrDivider(),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SvgPicture.asset('assets/images/shapes/Logo-2.svg'),
-              SvgPicture.asset('assets/images/shapes/Logo-3.svg'),
-              SvgPicture.asset('assets/images/shapes/Logo.svg'),
-            ],
-          )
+          // const OrDivider(),
+          // const SizedBox(height: 20),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     SvgPicture.asset('assets/images/shapes/Logo-2.svg'),
+          //     SvgPicture.asset('assets/images/shapes/Logo-3.svg'),
+          //     SvgPicture.asset('assets/images/shapes/Logo.svg'),
+          //   ],
+          // )
         ],
       ),
     );

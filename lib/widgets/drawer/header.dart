@@ -21,11 +21,7 @@ class CustomDrawerHeader extends StatelessWidget {
             flex: 2,
             child: SizedBox(
               width: 35,
-              child: Image.asset(
-                "assets/images/shapes/business.png",
-                width: 35,
-                fit: BoxFit.cover,
-              ),
+              child: Container(),
             ),
           ),
           if (isColapsed) const SizedBox(width: 10),

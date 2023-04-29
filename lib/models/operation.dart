@@ -20,6 +20,7 @@ class Operation {
   final double? excedente;
   final double? costoProviderOutcome;
   final double? costoProviderIncome;
+  final double? retornoTotalCliente;
 
   const Operation({
     required this.id,
@@ -39,6 +40,7 @@ class Operation {
     this.excedente,
     this.costoProviderIncome,
     this.costoProviderOutcome,
+    this.retornoTotalCliente,
   });
   static const empty = Operation(id: null);
 
@@ -60,6 +62,7 @@ class Operation {
         excedente: json['excedente'].toDouble(),
         costoProviderIncome: json['costoProviderIncome'].toDouble(),
         costoProviderOutcome: json['costoProviderOutcome'].toDouble(),
+        retornoTotalCliente: json['retornoTotalCliente'].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
